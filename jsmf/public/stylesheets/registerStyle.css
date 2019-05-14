@@ -1,0 +1,18 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+.justify-content-md-center {
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(255, 255, 255, 0.2), 0 9px 26px 0 rgba(255, 255, 255, 0.19);
+  background-color: white;
+}
