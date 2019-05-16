@@ -5,6 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://localhost/User')
+  .then(() => console.log('connection succesful'))
+  .catch((err) => console.error(err));
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
