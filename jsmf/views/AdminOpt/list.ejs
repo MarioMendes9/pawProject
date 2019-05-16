@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users List</title>
+    <link rel='stylesheet' href='../../public/stylesheets/styleUser.css' />
+  </head>
+  <body>
+    <div class="container">
+      <h3><a href="/admin/createUser">Create User</a></h3>
+      <h1>Users List</h1>
+      <% if(users.length>0) { %>
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>IBAN</th>
+            <th>Endereço</th>
+            <th>Nome Completo</th>
+            <th>NIF</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% for(var i=0; i<users.length;i++) { %>
+            <tr>
+              <td><a href="/admin/showInfo/<%= users[i]._id%>"><%= users[i].username%></a></td>
+              <td><%= users[i].IBAN%></td>
+              <td><%= users[i].localizacao%></td>
+              <td><%= users[i].nomeCompleto%></td>
+              <td><%= users[i].NIF%></td>
+              <td><%= users[i].tipoU%></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <div>No users found.</div>
+      <% } %>
+    </div>
+  </body>
+</html>

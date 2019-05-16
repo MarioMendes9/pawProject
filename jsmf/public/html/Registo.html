@@ -15,41 +15,37 @@
 
     <div class="container">
         <div class="justify-content-md-center">
-            <form action="/DEFENIR">
+            <form action="/user/save" method="POST">
                 <h1>Criação De Conta</h1><br>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Nome :</label>
-                        <input type="string" class="form-control" name="nome" id="nome" placeholder="Nome...">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Apelido :</label>
-                        <input type="string" class="form-control" name="apelido" id="apelido" placeholder="Apelido...">
-                    </div>
-                </div>
-                <div class="form-group">
+                
+
                     <label for="inputAddress">Username :</label>
                     <input type="text" class="form-control" name="username" id="username" placeholder="Username....">
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+                
+            </br>
+                    <!-- <div class="form-group col-md-6">
                         <label for="inputEmail4">Email :</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email...">
-                    </div>
-                    <div class="form-group col-md-6">
+                    </div> -->
+                  
                         <label for="inputPassword4">Password :</label>
                         <input type="password" class="form-control" name="password" id="password"
                             placeholder="Password...">
-                    </div>
-                </div>
-                <div class="form-group">
+                    
+                        </br>
                     <label for="inputAddress">IBAN :</label>
-                    <input type="text" class="form-control" name="iban" id="iban" placeholder="(DEFINIR)">
-                </div>
-                <div class="form-group">
+                    <input type="text" class="form-control" name="IBAN" id="iban" placeholder="(DEFINIR)">
+                
+                </br>
+                    <label for="inputEmail4">Nome completo :</label>
+                    <input type="string" class="form-control" name="nomeCompleto" id="nome" placeholder="Nome...">
+                
+                </br>
                     <label for="inputAddress2">NIF :</label>
-                    <input type="text" class="form-control" name="nif" id="nif" placeholder="(DEFINIR)">
-                </div><br>
+                    <input type="text" class="form-control" name="NIF" id="nif" placeholder="(DEFINIR)">
+                
+                
+                </br>
                 <button type="submit" class="btn btn-primary">Create Acount</button>
             </form>
         </div>

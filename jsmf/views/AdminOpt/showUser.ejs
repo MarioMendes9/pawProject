@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Detail</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+</head>
+
+<body>
+    <div>
+        <h3><a href="/admin/listUsers">Users List</a></h3>
+        <h1>User Detail</h1>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Username</td>
+                    <td>:</td>
+                    <td><%= user.username %></td>
+                </tr>
+                <tr>
+                    <td>IBAN</td>
+                    <td>:</td>
+                    <td><%= user.IBAN %></td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>localizacao</td>
+                    <td>:</td>
+                    <td><%= user.localizacao %></td>
+                </tr>
+                <tr>
+                    <td>Nome completo</td>
+                    <td>:</td>
+                    <td><%= user.nomeCompleto %></td>
+                </tr>
+                <tr>
+                    <td>NIF</td>
+                    <td>:</td>
+                    <td><%= user.NIF %></td>
+                </tr>
+                <tr>
+                        <td>Tipo Utilizador</td>
+                        <td>:</td>
+                        <td><%= user.tipoU %></td>
+                      </tr>
+            </tbody>
+        </table>
+        <h3><a href="/admin/edit/<%= user._id%>">EDIT</a></h3>
+        <form action="/admin/delete/<%= user._id%>" method="post">
+            <button type="submit">DELETE</button>
+        </form>
+    </div>
+</body>
+
+</html>
