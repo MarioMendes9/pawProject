@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit user</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+</head>
+
+<body>
+    <div>
+        <h3><a href="/listUsers">Employee List</a></h3>
+        <h1>Edit user</h1>
+        <form action="/users/update/<%= user._id%>" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type="text" name="username" value="<%= user.username %>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="text" name="password" value="<%= user.password %>" /></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td>IBAN</td>
+                        <td><input type="text" name="IBAN" value="<%= user.IBAN %>" /></td>
+                    </tr>
+                    <td>Localizaçao</td>
+                    <td><textarea name="localizacao"><%= employee.Localizacao %></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Nome completo</td>
+                        <td><input type="text" name="nomeCompleto" value="<%= user.nomeCompleto %>" /></td>
+                    </tr>
+                    <tr>
+                        <td>NIF</td>
+                        <td><input type="number" name="NIF" value="<%= employee.NIF %>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Tipo Utilizador</td>
+                        <td><input type="text" name="tipoU" value="<%= user.tipoU %>" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Update</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>
