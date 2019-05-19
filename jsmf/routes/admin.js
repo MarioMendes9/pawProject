@@ -48,6 +48,7 @@ router.get('/showInfo/:id',userOptions.allInfo);
 
  router.get('/Campanha/:id',campOptions.getCampById);
 
+ router.get('/newCamp',campOptions.newCamp);
  router.post('/newCamp',campOptions.create);
 
  router.delete('/deleteCamp/:id',campOptions.delete);
