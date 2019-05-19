@@ -31,7 +31,7 @@ router.post('/updateStateCampanha', campanhaController.updateStateCampanha);
  * Delete donate
  */
 
-router.delete('/campanha/:id', campanhaController.deleteCampanha);
+router.delete('/deleteCampanha/:id', campanhaController.deleteCampanha);
 
 /**
  * Procurar uma campanha
