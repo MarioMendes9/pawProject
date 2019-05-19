@@ -53,27 +53,38 @@
     </div>
     <br>
     <!-- Page Content -->
-    <div class="container" style="background-color: white">
+    <div class="container">
         <h1>Lista das campanhas</h1>
-        <% if(campanhas.length>0) { %>
+        <% if(employees.length>0) { %>
+        <div class="card">
+            <div class="card-body">
 
-        <% for(var i = 0; i<campanhas.length;i++){ %>
-        <div class="row justify-content-md-center">
-            <div class="card" style="width:350px">
-                <div class="card-body">
-                    <h4 class="card-title"><%= campanhas[i].nomeCampanha %></h4>
-                    <p class="card-text"><%= campanhas[i].descricao %></p>
-                    <a href="#" class="btn btn-primary">See Profile</a>
-                </div>
+                Valor Total : <input type="text" id="engariado" name="engariado">
+                <h4 class="card-title"><%= campanha.name %></h4>
+                <p class="card-text"><%= campanha.description %></p>
+
+                <form action="/DEFENIR" method="POST">
+                    <div class="justify-content-md-center">
+
+                        <label for="montante" class="col-form-label">Montante</label>
+                        <div class="col-end">
+                            <input type="number" class="form-control" id="montante" placeholder="Montante...">
+                        </div>
+
+                        <div class="col-12">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submeter</button>
+                        </div>
+                        <br>
+
+                </form>
+
             </div>
         </div>
-        <% } %>
         <% } else { %>
-        <div>Não existem campanhas.</div>
+        <div>Não Existem Campanhas.</div>
         <% } %>
-
     </div>
-
 </body>
 
 </html>
