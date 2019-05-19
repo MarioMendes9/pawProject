@@ -2,53 +2,52 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>User Detail</title>
-    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
 </head>
 
 <body>
-    <div>
-        <h3><a href="/admin/listUsers">Users List</a></h3>
-        <h1>User Detail</h1>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Username</td>
-                    <td>:</td>
-                    <td><%= user.username %></td>
-                </tr>
-                <tr>
-                    <td>IBAN</td>
-                    <td>:</td>
-                    <td><%= user.IBAN %></td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>localizacao</td>
-                    <td>:</td>
-                    <td><%= user.localizacao %></td>
-                </tr>
-                <tr>
-                    <td>Nome completo</td>
-                    <td>:</td>
-                    <td><%= user.nomeCompleto %></td>
-                </tr>
-                <tr>
-                    <td>NIF</td>
-                    <td>:</td>
-                    <td><%= user.NIF %></td>
-                </tr>
-                <tr>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h3><a href="/admin/listUsers">Users List</a></h3>
+            <h1 class="font-weight-bold">User Detail</h1>
+            <table class="table table-striped table-bordered table-dark">
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td><%= user.username %></td>
+                    </tr>
+                    <tr>
+                        <td>IBAN</td>
+                        <td><%= user.IBAN %></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td>localizacao</td>
+                        <td><%= user.localizacao %></td>
+                    </tr>
+                    <tr>
+                        <td>Nome completo</td>
+                        <td><%= user.nomeCompleto %></td>
+                    </tr>
+                    <tr>
+                        <td>NIF</td>
+                        <td><%= user.NIF %></td>
+                    </tr>
+                    <tr>
                         <td>Tipo Utilizador</td>
-                        <td>:</td>
                         <td><%= user.tipoU %></td>
-                      </tr>
-            </tbody>
-        </table>
-        <h3><a href="/admin/edit/<%= user._id%>">EDIT</a></h3>
-        <form action="/admin/delete/<%= user._id%>" method="post">
-            <button type="submit">DELETE</button>
-        </form>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <h3><a href="/admin/edit/<%= user._id%>">EDIT User</a></h3>
+            <form action="/admin/delete/<%= user._id%>" method="post">
+                <button type="submit" class="btn btn-danger">DELETE</button>
+            </form>
+        </div>
     </div>
 </body>
 
