@@ -8,7 +8,7 @@ var cors = require('cors');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/User')
+mongoose.connect('mongodb://localhost:27017/User', { useNewUrlParser: true })
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
@@ -17,6 +17,10 @@ var adminRouter=require('./routes/admin');
 
 
 var app = express();
+app.use(function(req, res, next) {
+  req.headers['if-none-match'] = 'no-match-for-this';
+  next();    
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,11 +36,11 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use("/admin",adminRouter);
 
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function (err, req, res, next) {

@@ -8,9 +8,9 @@
 
 <body>
     <div>
-        <h3><a href="/listUsers">Employee List</a></h3>
+        <h3><a href="/admin/listUsers">Users List</a></h3>
         <h1>Edit user</h1>
-        <form action="/users/update/<%= user._id%>" method="post">
+        <form action="/admin/edit/<%= user._id%>" method="post">
             <table>
                 <tbody>
                     <tr>
@@ -27,7 +27,7 @@
                         <td><input type="text" name="IBAN" value="<%= user.IBAN %>" /></td>
                     </tr>
                     <td>Localizaçao</td>
-                    <td><textarea name="localizacao"><%= employee.Localizacao %></textarea></td>
+                    <td><textarea name="localizacao"><%= user.localizacao %></textarea></td>
                     </tr>
                     <tr>
                         <td>Nome completo</td>
@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td>NIF</td>
-                        <td><input type="number" name="NIF" value="<%= employee.NIF %>" /></td>
+                        <td><input type="number" name="NIF" value="<%= user.NIF %>" /></td>
                     </tr>
                     <tr>
                         <td>Tipo Utilizador</td>

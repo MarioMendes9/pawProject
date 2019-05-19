@@ -57,13 +57,15 @@ campanhaController.createCampanha=function(req,res,next){
   */
 
   campanhaController.getByIdCampanha=function(req,res,next){
-      Campanha.findOne({_id:req.params.id},function(err,campanha){
+      Campanha.findById(req.params.id,function(err,campanha){
         if(err){
             next(err);
         } else{
+            //console.log(campanha);
             res.json(campanha);
         }
       });
+
   };
 
 

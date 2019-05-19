@@ -5,9 +5,9 @@ var path = require('path');
 
 var userOptController = {};
 
-userOptController.opt = function (req, res) {
+/* userOptController.opt = function (req, res) {
     res.render("../views/AdminOpt/adminOpt");
-};
+}; */
 
 userOptController.manage = function (req, res) {
     res.render("../views/AdminOpt/manageUsers");
@@ -47,20 +47,55 @@ userOptController.create = function (req, res) {
 
 
 userOptController.edit = function (req, res) {
-
+    User.findByIdAndUpdate(req.params.id, {
+        $set: {
+            username: req.body.username, password: req.body.password,
+            IBAN: req.body.IBAN, localizacao: req.body.localizacao, nomeCompleto: req.body.nomeCompleto, tipoU: req.body.tipoU
+        }
+    }, { new: true }, function (err, employee) {
+        if (err) {
+            console.log("Emplooyee:"+employee);
+            console.log(err);
+            res.render("../views/AdminOpt/edit", { employee: req.body });
+        }
+        console.log("Aquiiii");
+        res.redirect("/admin/showInfo/" + employee.id);
+    });
 };
 
-userOptController.delete = function (req, res) {
+userOptController.showEditUser=function(req,res){
+    User.findOne({ _id: req.params.id }, function (err, user) {
+        if (err) {
+            next(err);
+        }
+        else {
+            res.render("../views/AdminOpt/editUser", { user: user });
+        }
+    });
+};
 
+
+
+
+userOptController.delete = function (req, res) {
+    User.remove({_id:req.params.id},function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("User deleted!");
+            res.redirect("/admin/listUsers");
+        }
+    });
 };
 
 userOptController.allInfo = function (req, res) {
-    User.findOne({_id:req.params.id},function(err,user){
-        if(err){
+    User.findOne({ _id: req.params.id }, function (err, user) {
+        if (err) {
             next(err);
         }
-        else{
-            res.render("../views/AdminOpt/showUser",{user:user});
+        else {
+            res.render("../views/AdminOpt/showUser", { user: user });
         }
     });
 };

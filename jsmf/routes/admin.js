@@ -5,7 +5,9 @@ var campOptions=require("../controllers/CampanhaOptController");
 
 
 //Admin board page 
-router.get('/',userOptions.opt);
+router.get('/',function(req,res){
+    res.render("../views/AdminOpt/adminOpt");
+});
 
 //manage users
 
@@ -19,17 +21,23 @@ router.post('/save',userOptions.save);
 
 //Edit utilizador
 
-router.get('/edit/:id',userOptions.edit);
+router.post('/edit/:id',userOptions.edit);
+
+router.get('/edit/:id',userOptions.showEditUser);
 
 //Delete utilizador
 
-router.get('/delete/:id',userOptions.delete);
+router.post('/delete/:id',userOptions.delete);
 
 
 //Lista donativos/total gasto/ e campanhas de um utilizador
 
 router.get('/showInfo/:id',userOptions.allInfo);
 
+
+/*****************************************************************************
+ * ALMOST DONE A PARTE EM CIMA
+ ****************************************************************************/
 /**
  * Comunicar com a api
  */
@@ -38,7 +46,7 @@ router.get('/showInfo/:id',userOptions.allInfo);
 
  router.get('/getCampanhas',campOptions.getAll);
 
- router.get('/getCampanha/:id',campOptions.getCampById);
+ router.get('/Campanha/:id',campOptions.getCampById);
 
  router.post('/newCamp',campOptions.create);
 
