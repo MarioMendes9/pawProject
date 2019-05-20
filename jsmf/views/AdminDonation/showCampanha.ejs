@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>User Detail</title>
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h1 class="font-weight-bold">Campanha Detail</h1>
+            <table class="table table-striped table-bordered table-dark">
+                <tbody>
+                    <tr>
+                        <td>estado</td>
+                        <td><%= campanha.estado %></td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td><%= campanha.description %></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td>Target Value</td>
+                        <td><%= campanha.targetValue %></td>
+                    </tr>
+                    <tr>
+                        <td>Logo Name</td>
+                        <td><%= campanha.logoName %></td>
+                    </tr>
+                    <tr>
+                        <td>IBAN</td>
+                        <td><%= campanha.iban %></td>
+                    </tr>
+                    <tr>
+                        <td>Responsaveis</td>
+
+                        <% for(var i =0; i < campanha.responsaveis.length; i++) { %>
+                        <td><%= campanha.responsaveis[i] %></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+
+                        <% for(var i =0; i < campanha.donations.length; i++) { %>
+                        <td><%= campanha.donations[i] %></td>
+                        <% } %>
+
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <h3><a href="/admin/edit/<%= campanha._id%>">EDIT Campanha</a></h3>
+            <form action="/admin/delete/<%= campanha._id%>" method="post">
+                <button type="submit" class="btn btn-danger">DELETE</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

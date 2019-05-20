@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Edit Campanhas</title>
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h3><a href="/admin/listUsers">Campanhas List</a></h3>
+            <h1 class="font-weight-bold">Edit Campanhas</h1>
+            <form action="DEFENIR" method="post">
+                <table class="table table-striped table-bordered table-dark">
+                    <tbody>
+                        <tr>
+                            <td>Estado</td>
+                            <td><input type="text" name="estado" value="<%= campanhas.Estado %>" /></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td><input type="text" name="description" value="<%= campanhas.description %>" /></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <td>Target Value</td>
+                            <td><input type="number" name="targetValue" value="<%= campanhas.targetValue %>" /></td>
+                        </tr>
+                        <td>logoName</td>
+                        <td><input type="file" id="file" name="file" multiple><% campanhas.logoName %></td>
+                        </tr>
+                        <tr>
+                            <td>IBAN</td>
+                            <td><input type="text" name="nomeCompleto" value="<%= campanhas.iban %>" /></td>
+                        </tr>
+                        <tr>
+                            <td>Responsaveis</td>
+                            <% for(var i=0;i<campanhas.responsaveis.length;i++) { %>
+                            <td><input type="text" name="NIF" value="<%= campanhas.responsaveis[i] %>" /></td>
+                            <% } %>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

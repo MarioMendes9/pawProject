@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Campanhas List</title>
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h1 class="font-weight-bold">Camapanha List</h1><br>
+            <% if(campanhas.length>0) { %>
+            <table class="table table-striped table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">estado</th>
+                        <th scope="col">description</th>
+                        <th scope="col">targetValue</th>
+                        <th scope="col">IBAN</th>
+                        <th scope="col">Total Donations</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% var totalDonation = 0, for(var i=0; i<campanhas.length;i++) { %>
+                    <tr>
+                        <th scope="row"><%= i + 1%></th>
+                        <td><%= campanhas[i].estado%></a></td>
+                        <td><%= campanhas[i].description%></td>
+                        <td><%= campanhas[i].targetValue%></td>
+                        <td><%= campanhas[i].iban%></td>
+
+                        <% var totalDonation for(var j = 0;j<campanhas.length;j++){ %>
+
+                        <% totalDonation += campanhas[i].donations[j].montante %>
+
+                        <% } %>
+                        <td><a href="DEFENIR" class="nameList"><%= totalDonation%></a></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <div>No campanhas found.</div>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -6,11 +6,11 @@ var path = require('path');
 var userOptController = {};
 
 /* userOptController.opt = function (req, res) {
-    res.render("../views/AdminOpt/adminOpt");
+    res.render("../views/AdminUsers/adminUsers");
 }; */
 
 userOptController.manage = function (req, res) {
-    res.render("../views/AdminOpt/manageUsers");
+    res.render("../views/AdminUsers/manageUsers");
 };
 
 
@@ -22,7 +22,7 @@ userOptController.list = function (req, res) {
             console.log("Error:", error);
         } else {
             // res.json(users);
-            res.render("../views/AdminOpt/list", { users: users });
+            res.render("../views/AdminUsers/list", { users: users });
         }
     });
 };
@@ -54,22 +54,22 @@ userOptController.edit = function (req, res) {
         }
     }, { new: true }, function (err, employee) {
         if (err) {
-            console.log("Emplooyee:"+employee);
+            console.log("Emplooyee:" + employee);
             console.log(err);
-            res.render("../views/AdminOpt/edit", { employee: req.body });
+            res.render("../views/AdminUsers/edit", { employee: req.body });
         }
         console.log("Aquiiii");
         res.redirect("/admin/showInfo/" + employee.id);
     });
 };
 
-userOptController.showEditUser=function(req,res){
+userOptController.showEditUser = function (req, res) {
     User.findOne({ _id: req.params.id }, function (err, user) {
         if (err) {
             next(err);
         }
         else {
-            res.render("../views/AdminOpt/editUser", { user: user });
+            res.render("../views/AdminUsers/editUser", { user: user });
         }
     });
 };
@@ -78,11 +78,11 @@ userOptController.showEditUser=function(req,res){
 
 
 userOptController.delete = function (req, res) {
-    User.remove({_id:req.params.id},function(err){
-        if(err){
+    User.remove({ _id: req.params.id }, function (err) {
+        if (err) {
             console.log(err);
         }
-        else{
+        else {
             console.log("User deleted!");
             res.redirect("/admin/listUsers");
         }
@@ -95,7 +95,7 @@ userOptController.allInfo = function (req, res) {
             next(err);
         }
         else {
-            res.render("../views/AdminOpt/showUser", { user: user });
+            res.render("../views/AdminUsers/showUser", { user: user });
         }
     });
 };

@@ -1,38 +1,38 @@
 var express = require('express');
 var router = express.Router();
-var userOptions=require("../controllers/UserOptControllers");
-var campOptions=require("../controllers/CampanhaOptController");
+var userOptions = require("../controllers/UserOptControllers");
+var campOptions = require("../controllers/CampanhaOptController");
 
 
 //Admin board page 
-router.get('/',function(req,res){
-    res.render("../views/AdminOpt/adminOpt");
+router.get('/', function (req, res) {
+    res.render("../views/AdminUsers/adminOpt");
 });
 
 //manage users
 
-router.get('/ManageUser',userOptions.manage);
+router.get('/ManageUser', userOptions.manage);
 //Get all users 
-router.get('/listUsers',userOptions.list);
+router.get('/listUsers', userOptions.list);
 //Criar utilizador
-router.get('/createUser',userOptions.create);
+router.get('/createUser', userOptions.create);
 
-router.post('/save',userOptions.save);
+router.post('/save', userOptions.save);
 
 //Edit utilizador
 
-router.post('/edit/:id',userOptions.edit);
+router.post('/edit/:id', userOptions.edit);
 
-router.get('/edit/:id',userOptions.showEditUser);
+router.get('/edit/:id', userOptions.showEditUser);
 
 //Delete utilizador
 
-router.post('/delete/:id',userOptions.delete);
+router.post('/delete/:id', userOptions.delete);
 
 
 //Lista donativos/total gasto/ e campanhas de um utilizador
 
-router.get('/showInfo/:id',userOptions.allInfo);
+router.get('/showInfo/:id', userOptions.allInfo);
 
 
 /*****************************************************************************
@@ -42,19 +42,19 @@ router.get('/showInfo/:id',userOptions.allInfo);
  * Comunicar com a api
  */
 
- router.get('/ManageDonations',campOptions.manage);
+router.get('/ManageDonations', campOptions.manage);
 
- router.get('/getCampanhas',campOptions.getAll);
+router.get('/getCampanhas', campOptions.getAll);
 
- router.get('/Campanha/:id',campOptions.getCampById);
+router.get('/Campanha/:id', campOptions.getCampById);
 
- router.get('/newCamp',campOptions.newCamp);
- router.post('/newCamp',campOptions.create);
+router.get('/newCamp', campOptions.newCamp);
+router.post('/newCamp', campOptions.create);
 
- router.delete('/deleteCamp/:id',campOptions.delete);
+router.delete('/deleteCamp/:id', campOptions.delete);
 
- router.post('/CampDonate',campOptions.addDonation);
+router.post('/CampDonate', campOptions.addDonation);
 
- router.post('/UpdateDonate',campOptions.updateStateDonation);
+router.post('/UpdateDonate', campOptions.updateStateDonation);
 
-module.exports=router;
+module.exports = router;
