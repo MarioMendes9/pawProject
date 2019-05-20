@@ -44,22 +44,27 @@
 
 
     <br>
-    <form action="/admin/CampDonate" method="POST">
-        <div class="col-md-5 ml-auto">
-            Bem vindo <input type="hidden" name="username" value="<%= name %>"><%= name %><button type="button" class="btn btn-secondary"><img
-                    src="../images/logo/def.png" alt="def" style="width:20px;height:20px;"> Definição</button>
-            <button type="button" class="btn btn-secondary"><img src="../images/logo/logout.png" alt="def"
-                    style="width:20px;height:20px;"> Log Out</button>
-        </div>
-        <br>
-        <!-- Page Content -->
-        <div class="container">
-            <h1>Lista das campanhas</h1>
-            <% if(campanha.length>0) { %>
-            <% for(var i=0;i<campanha.length;i++) { %>
+
+    <div class="col-md-5 ml-auto">
+        Bem vindo <input type="hidden" name="username" value="<%= name %>"><%= name %><button type="button"
+            class="btn btn-secondary"><img src="../images/logo/def.png" alt="def" style="width:20px;height:20px;">
+            Definição</button>
+        <button type="button" class="btn btn-secondary"><img src="../images/logo/logout.png" alt="def"
+                style="width:20px;height:20px;"> Log Out</button>
+    </div>
+    <br>
+    <!-- Page Content -->
+    <div class="container">
+        <h1>Lista das campanhas</h1>
+
+        <% if(campanha.length>0) { %>
+        <% for(var i=0;i<campanha.length;i++) { %>
+        <form action="/admin/CampDonate" method="POST">
             <div class="card">
                 <div class="card-body">
+                    <input type="hidden" name="username" value="<%= name %>">
                     <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                    <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
                     <div id="desc">
                         </br>
                         </br>
@@ -87,7 +92,7 @@
                         </div>
                         <br>
 
-    </form>
+        </form>
 
     </div>
     </div>

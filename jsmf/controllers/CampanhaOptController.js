@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var path = require('path');
 var http = require('http');
-var formidable = require('formidable');
 var fs = require('fs');
 var multiparty = require('multiparty');
 var campanhaOptController = {};
@@ -21,18 +20,26 @@ campanhaOptController.getAll = function (req, res) {
     };
 
 
-
-    var req = http.get(options, function (res) {
-        console.log(`statusCode:${res.statusCode}`);
-        res.setEncoding('utf-8');
-        res.on('data', function (d) {
-            campanhas += d;
-            return campanhas;
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanhas += d;
+                resolve();
+               
+            });
         });
-    });
 
-    req.on('error', (error) => {
-        console.log(error);
+        req.on('error', (error) => {
+            console.log(error);
+        });
+
+    });
+    p1.then(function(){
+        console.log(campanhas);
+        res.render("../views/AdminDonation/listCampanha", { campanhas: campanhas });
+        
     });
 
 };
@@ -161,7 +168,7 @@ campanhaOptController.create = function (req, res) {
 };
 campanhaOptController.addDonation = function (req, res) {
     var campanha = "";
-    
+
     console.log(req.body);
 
     var tempDonation = {
@@ -169,10 +176,10 @@ campanhaOptController.addDonation = function (req, res) {
             user: req.body.username,
             montante: req.body.montante
         },
-        id:"5ce1d067ae338220802d9675"
+        id: req.body.idCampanha
     }
 
-    var details= JSON.stringify(tempDonation);
+    var details = JSON.stringify(tempDonation);
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -201,12 +208,20 @@ campanhaOptController.addDonation = function (req, res) {
     console.log(details);
     req.write(details);
     req.end();
-    
+
+    res.redirect("/home");
+
+
 
 
 };
 
 campanhaOptController.updateStateDonation = function (req, res) {
+
+};
+
+
+campanhaOptController.editCamp = function (req, res) {
 
 };
 
