@@ -52,14 +52,14 @@ userOptController.edit = function (req, res) {
             username: req.body.username, password: req.body.password,
             IBAN: req.body.IBAN, localizacao: req.body.localizacao, nomeCompleto: req.body.nomeCompleto, tipoU: req.body.tipoU
         }
-    }, { new: true }, function (err, employee) {
+    }, { new: true }, function (err, user) {
         if (err) {
-            console.log("Emplooyee:" + employee);
+            console.log("Emplooyee:" + user);
             console.log(err);
             res.render("../views/AdminUsers/edit", { employee: req.body });
         }
         console.log("Aquiiii");
-        res.redirect("/admin/showInfo/" + employee.id);
+        res.redirect("/admin/showInfo/" + user.id);
     });
 };
 

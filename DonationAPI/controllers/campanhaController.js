@@ -1,20 +1,20 @@
-var mongoose=require("mongoose");
-var Campanha=require("../models/campanha");
+var mongoose = require("mongoose");
+var Campanha = require("../models/campanha");
 
-var campanhaController={};
+var campanhaController = {};
 
 /**
  * Criar uma camapanha 
  */
-campanhaController.createCampanha=function(req,res,next){
+campanhaController.createCampanha = function (req, res, next) {
     console.log(req.body);
-    var campanha=new Campanha(req.body);
+    var campanha = new Campanha(req.body);
 
-    campanha.save(function(err){
-        if(err){
+    campanha.save(function (err) {
+        if (err) {
             next(err);
         }
-        else{
+        else {
             res.json(campanha);
         }
     });
@@ -24,86 +24,107 @@ campanhaController.createCampanha=function(req,res,next){
  * Apagar uma camapanha
  */
 
- campanhaController.deleteCampanha=function(req,res){
-     console.log("id: "+req.params.id);
-    Campanha.deleteOne({_id:req.params.id},function(err,result){
-        if(err){
+campanhaController.deleteCampanha = function (req, res) {
+    console.log("id: " + req.params.id);
+    Campanha.deleteOne({ _id: req.params.id }, function (err, result) {
+        if (err) {
             console.log(err);
         }
-        else{
+        else {
             console.log("Doaçao deleted!");
             res.json(result);
         }
     });
 };
- 
+
 
 /**
  * Pedir todas as campanhas
  */
 
- campanhaController.getAllCampanhas=function(req,res,next){
-     Campanha.find(function(err,campanhas){
-        if(err){
+campanhaController.getAllCampanhas = function (req, res, next) {
+    Campanha.find(function (err, campanhas) {
+        if (err) {
             next(err);
-        }else{
+        } else {
             res.json(campanhas);
         }
-     });
- };
+    });
+};
 
- /**
-  * Pedir uma campanha 
-  */
+/**
+ * Pedir uma campanha 
+ */
 
-  campanhaController.getByIdCampanha=function(req,res,next){
-      Campanha.findById(req.params.id,function(err,campanha){
-        if(err){
+campanhaController.getByIdCampanha = function (req, res, next) {
+    Campanha.findById(req.params.id, function (err, campanha) {
+        if (err) {
             next(err);
-        } else{
+        } else {
             //console.log(campanha);
             res.json(campanha);
         }
-      });
+    });
 
-  };
-
-
-  /**
-   * Update numa doaçao na campanha (done)
-   */
-
-   campanhaController.addDonation=function(req,res,next){
-       console.log("isto"+req.body.id);
-       Campanha.findOneAndUpdate(
-           {_id:req.body.id},
-           {$push:{donations:req.body.donation}},{new:true}
-           ,function(err,campanha){
-               if(err){
-                   next(err);
-               }else{
-                   res.json(campanha);
-               }
-           });
-   };
+};
 
 
-  /**
-   * Update numa info da campanha 
-   */
+/**
+ * Update numa doaçao na campanha (done)
+ */
 
-   campanhaController.updateStateDonation=function(req,res,next){
-        Campanha.findOneAndUpdate({"donations._id":req.body.donateId},
-            {$set:{'donations.$.estado':req.body.estado}},{new:true},function(err,donation){
-                if(err){
-                    next(err);
-                }
-                else{
-                    res.json(donation);
-                }
+campanhaController.addDonation = function (req, res, next) {
+    console.log("isto" + req.body.id);
+    Campanha.findOneAndUpdate(
+        { _id: req.body.id },
+        { $push: { donations: req.body.donation } }, { new: true }
+        , function (err, campanha) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(campanha);
             }
-            );
-   };
-module.exports=campanhaController;
+        });
+};
+
+
+/**
+ * Update numa info da campanha 
+ */
+
+campanhaController.updateStateDonation = function (req, res, next) {
+    Campanha.findOneAndUpdate({ "donations._id": req.body.donateId },
+        { $set: { 'donations.$.estado': req.body.estado } }, { new: true }, function (err, donation) {
+            if (err) {
+                next(err);
+            }
+            else {
+                res.json(donation);
+            }
+        }
+    );
+};
+
+
+campanhaController.updateCampanha = function (req, res) {
+    Campanha.findByIdAndUpdate(req.params.id, {
+        $set: {
+            estado: req.body.estado, description: req.body.description,
+            targetValue: req.body.targetValue, logoName: req.body.logoName, IBAN: req.body.IBAN, responsaveis: req.body.responsaveis,
+            donations:req.body.donations
+        }
+    }, { new: true }, function (err, camp) {
+        if (err) {
+            console.log("campanha:" + camp);
+            console.log(err);
+            res.render("../views/AdminUsers/edit", { campanha: req.body });
+        }
+        console.log("Aquiiii");
+        res.redirect("/admin/Campanha/" + camp.id);
+    });
+};
+
+
+module.exports = campanhaController;
 
 
