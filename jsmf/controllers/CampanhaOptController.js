@@ -18,33 +18,16 @@ campanhaOptController.getAll = function (req, res) {
         hostname: 'localhost',
         port: 8080,
         path: '/api/v1/getCampanhas'
-        // method:'GET',
     };
 
 
 
-    /*  var req=http.request(options,(res)=>{
-         console.log(`statusCode:${res.statusCode}`);
-         res.setEncoding('utf-8');
- 
-         res.on('data',(d)=>{
-             campanhas+=d;
-            console.log(campanhas);
-         });
-     });
- 
-     req.on('error',(error)=>{
-         console.log(error);
-     });
- 
-     req.end();
-   */
     var req = http.get(options, function (res) {
         console.log(`statusCode:${res.statusCode}`);
         res.setEncoding('utf-8');
         res.on('data', function (d) {
             campanhas += d;
-            console.log(campanhas);
+            return campanhas;
         });
     });
 
@@ -118,54 +101,56 @@ campanhaOptController.newCamp = function (req, res) {
 
 
 campanhaOptController.create = function (req, res) {
-    var form= new multiparty.Form();
+    var form = new multiparty.Form();
     form.parse(req, function (err, fields, files) {
         var oldpath = files.logo[0].path;
-        const newPath = path.join(__dirname,"../public/images/logoCamp/"+files.logo[0].originalFilename);
-         fs.rename(oldpath, newPath, function (err) {
+        const newPath = path.join(__dirname, "../public/images/logoCamp/" + files.logo[0].originalFilename);
+        fs.rename(oldpath, newPath, function (err) {
             if (err) throw err;
             console.log("done file saved");
-        }); 
+        });
 
-        
 
-        var creatCamp={
-            description:fields.description[0],
+
+        var creatCamp = {
+            description: fields.description[0],
             targetValue: parseInt(fields.targetValue[0]),
-            logoName:files.logo[0].originalFilename,
-            IBAN:fields.IBAN[0],
-            responsaveis:fields["responsaveis[]"]
+            logoName: files.logo[0].originalFilename,
+            IBAN: fields.IBAN[0],
+            responsaveis: fields["responsaveis[]"]
 
         };
 
 
         console.log(creatCamp);
-        var details=JSON.stringify(creatCamp);
+        var details = JSON.stringify(creatCamp);
         var options = {
             hostname: 'localhost',
             port: 8080,
             path: '/api/v1/newCampanha',
             method: 'POST',
-            headers:{"Content-Type": "application/json",
-                    'Content-Length':details.length}
+            headers: {
+                "Content-Type": "application/json",
+                'Content-Length': details.length
+            }
         };
-       // console.log(details);
-        var campanha="";
+        // console.log(details);
+        var campanha = "";
         var req = http.request(options, (res) => {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
-    
+
             res.on('data', (d) => {
                 campanha += d;
                 console.log(campanha);
             });
         });
-    
+
         req.on('error', (error) => {
             console.log(error);
         });
         console.log(details);
-        
+
         req.write(details);
         req.end();
 
@@ -175,6 +160,49 @@ campanhaOptController.create = function (req, res) {
 
 };
 campanhaOptController.addDonation = function (req, res) {
+    var campanha = "";
+    
+    console.log(req.body);
+
+    var tempDonation = {
+        donation: {
+            user: req.body.username,
+            montante: req.body.montante
+        },
+        id:"5ce1d067ae338220802d9675"
+    }
+
+    var details= JSON.stringify(tempDonation);
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/addDonation',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Content-Length': details.length
+        }
+    };
+
+
+    var req = http.request(options, (res) => {
+        console.log(`statusCode:${res.statusCode}`);
+        res.setEncoding('utf-8');
+
+        res.on('data', (d) => {
+            campanha += d;
+            console.log(campanha);
+        });
+    });
+
+    req.on('error', (error) => {
+        console.log(error);
+    });
+    console.log(details);
+    req.write(details);
+    req.end();
+    
+
 
 };
 

@@ -15,7 +15,8 @@ var CampanhaSchema = new Schema({
         donations: [{
                 user: { type: String },
                 montante: { type: Number },
-                estado: { type: String }
+                estado: { type: Boolean,
+                        default: false }
         }]
 
 });

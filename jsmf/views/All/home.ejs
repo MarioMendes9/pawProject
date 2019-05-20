@@ -44,46 +44,57 @@
 
 
     <br>
+    <form action="/admin/CampDonate" method="POST">
+        <div class="col-md-5 ml-auto">
+            Bem vindo <input type="hidden" name="username" value="<%= name %>"><%= name %><button type="button" class="btn btn-secondary"><img
+                    src="../images/logo/def.png" alt="def" style="width:20px;height:20px;"> Definição</button>
+            <button type="button" class="btn btn-secondary"><img src="../images/logo/logout.png" alt="def"
+                    style="width:20px;height:20px;"> Log Out</button>
+        </div>
+        <br>
+        <!-- Page Content -->
+        <div class="container">
+            <h1>Lista das campanhas</h1>
+            <% if(campanha.length>0) { %>
+            <% for(var i=0;i<campanha.length;i++) { %>
+            <div class="card">
+                <div class="card-body">
+                    <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                    <div id="desc">
+                        </br>
+                        </br>
+                        <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
+                            </br>
+                            <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
+                            <strong>Valor ja engariado: </strong>
+                        </p>
 
-    <div class="col-md-5 ml-auto">
-        Bem vindo <a href="#"><%= name %></a> <button type="button" class="btn btn-secondary"><img
-                src="../public/images/logo/def.png" alt="def" style="width:20px;height:20px;"> Definição</button>
-        <button type="button" class="btn btn-secondary"><img src="../public/images/logo/logout.png" alt="def"
-                style="width:20px;height:20px;"> Log Out</button>
-    </div>
-    <br>
-    <!-- Page Content -->
-    <div class="container">
-        <h1>Lista das campanhas</h1>
-        <% if(employees.length>0) { %>
-        <div class="card">
-            <div class="card-body">
+                    </div>
 
-                Valor Total : <input type="text" id="engariado" name="engariado">
-                <h4 class="card-title"><%= campanha.name %></h4>
-                <p class="card-text"><%= campanha.description %></p>
 
-                <form action="/DEFENIR" method="POST">
                     <div class="justify-content-md-center">
 
-                        <label for="montante" class="col-form-label">Montante</label>
+
                         <div class="col-end">
-                            <input type="number" class="form-control" id="montante" placeholder="Montante...">
+
+                            <input type="number" class="form-control" name="montante" id="montante"
+                                placeholder="Montante que deseja doar">
                         </div>
 
                         <div class="col-12">
                             <br>
-                            <button type="submit" class="btn btn-primary">Submeter</button>
+                            <button type="submit" class="btn btn-primary">Doar</button>
                         </div>
                         <br>
 
-                </form>
+    </form>
 
-            </div>
-        </div>
-        <% } else { %>
-        <div>Não Existem Campanhas.</div>
-        <% } %>
+    </div>
+    </div>
+    <% } %>
+    <% } else { %>
+    <div>Não Existem Campanhas.</div>
+    <% } %>
     </div>
 </body>
 

@@ -73,8 +73,8 @@ campanhaController.createCampanha=function(req,res,next){
    * Update numa doaçao na campanha (done)
    */
 
-   campanhaController.updateDonation=function(req,res,next){
-       console.log(req.body.id);
+   campanhaController.addDonation=function(req,res,next){
+       console.log("isto"+req.body.id);
        Campanha.findOneAndUpdate(
            {_id:req.body.id},
            {$push:{donations:req.body.donation}},{new:true}
@@ -92,7 +92,7 @@ campanhaController.createCampanha=function(req,res,next){
    * Update numa info da campanha 
    */
 
-   campanhaController.updateStateCampanha=function(req,res,next){
+   campanhaController.updateStateDonation=function(req,res,next){
         Campanha.findOneAndUpdate({"donations._id":req.body.donateId},
             {$set:{'donations.$.estado':req.body.estado}},{new:true},function(err,donation){
                 if(err){

@@ -46,3 +46,15 @@ a {
   font-weight: 600;
   text-decoration: none;
 }
+
+#logo{
+  width: 400px;
+  height: 200px;
+  float:left;
+  margin:5px;
+}
+
+#desc{
+  margin-left: 420px;
+  
+}

@@ -19,13 +19,13 @@ router.post('/newCampanha', campanhaController.createCampanha);
  * update numa campanha, donation
  */
 
-router.post('/updateCampanha', campanhaController.updateDonation);
+router.post('/addDonation', campanhaController.addDonation);
 
 /**
  * update estado de uma donation
  */
 
-router.post('/updateStateCampanha', campanhaController.updateStateCampanha);
+router.post('/updateStateDonation', campanhaController.updateStateDonation);
 
 /**
  * Delete donate
