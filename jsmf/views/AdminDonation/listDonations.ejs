@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Campanhas List</title>
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h1 class="font-weight-bold">Donation List</h1><br>
+            <% if(campanhas.length>0) { %>
+            <table class="table table-striped table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Donations</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% for(var i=0; i<campanhas.length;i++) { %>
+                    <tr>
+                        <th scope="row"><%= i + 1%></th>
+                        <td><%= campanhas[i].estado%></td>
+                        <td><%= campanhas[i].description%></td>
+                        <td><a href="DEFENIR" class="nameList"><%= campanhas[i].donations%></a></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <div>No campanhas found.</div>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>
