@@ -18,33 +18,16 @@ campanhaOptController.getAll = function (req, res) {
         hostname: 'localhost',
         port: 8080,
         path: '/api/v1/getCampanhas'
-        // method:'GET',
     };
 
 
 
-    /*  var req=http.request(options,(res)=>{
-         console.log(`statusCode:${res.statusCode}`);
-         res.setEncoding('utf-8');
- 
-         res.on('data',(d)=>{
-             campanhas+=d;
-            console.log(campanhas);
-         });
-     });
- 
-     req.on('error',(error)=>{
-         console.log(error);
-     });
- 
-     req.end();
-   */
     var req = http.get(options, function (res) {
         console.log(`statusCode:${res.statusCode}`);
         res.setEncoding('utf-8');
         res.on('data', function (d) {
             campanhas += d;
-            console.log(campanhas);
+            return campanhas;
         });
     });
 
@@ -177,6 +160,49 @@ campanhaOptController.create = function (req, res) {
 
 };
 campanhaOptController.addDonation = function (req, res) {
+    var campanha = "";
+    
+    console.log(req.body);
+
+    var tempDonation = {
+        donation: {
+            user: req.body.username,
+            montante: req.body.montante
+        },
+        id:"5ce1d067ae338220802d9675"
+    }
+
+    var details= JSON.stringify(tempDonation);
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/addDonation',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Content-Length': details.length
+        }
+    };
+
+
+    var req = http.request(options, (res) => {
+        console.log(`statusCode:${res.statusCode}`);
+        res.setEncoding('utf-8');
+
+        res.on('data', (d) => {
+            campanha += d;
+            console.log(campanha);
+        });
+    });
+
+    req.on('error', (error) => {
+        console.log(error);
+    });
+    console.log(details);
+    req.write(details);
+    req.end();
+    
+
 
 };
 
