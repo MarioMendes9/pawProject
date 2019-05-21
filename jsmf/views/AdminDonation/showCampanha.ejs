@@ -16,7 +16,11 @@
                 <tbody>
                     <tr>
                         <td>Estado</td>
-                        <td><%= campanha.estado %></td>
+                        <% if(campanha.estado == true){%>
+                        <td>Ativa</td>
+                        <% } else { %>
+                        <td>Nao Ativa</td>
+                        <%} %>
                     </tr>
                     <tr>
                         <td>Description</td>
@@ -71,7 +75,11 @@
                                     <td><%= i + 1 %></td>
                                     <td><%= campanha.donations[i].user %></td>
                                     <td><%= campanha.donations[i].montante %></td>
-                                    <td><%= campanha.donations[i].estado %></td>
+                                    <% if(campanha.estado == true){%>
+                                    <td>Confirmado</td>
+                                    <% } else { %>
+                                    <td>Nao Confirmado</td>
+                                    <%} %>
 
                                     <% totalDonation += campanha.donations[i].montante %>
                                 </tr>
