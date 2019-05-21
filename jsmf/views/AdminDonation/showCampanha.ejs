@@ -46,7 +46,7 @@
 
                                 <% for(var i =0; i < campanha.responsaveis.length; i++) { %>
                                 <tr>
-                                    <td><%= campanha.responsaveis[i] %></td>
+                                    <td><a href="/admin/showByUsername/<%= campanha.responsaveis[i] %>"><%= campanha.responsaveis[i] %></a></td>
                                 </tr>
                                 <% } %>
 
