@@ -80,7 +80,10 @@ campanhaOptController.getCampById = function (req, res) {
 
 
 campanhaOptController.delete = function (req, res) {
-    var filen = req.body.logoName;
+
+    var filen = req.params.id;
+
+  
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -374,7 +377,7 @@ campanhaOptController.editCamp = function (req, res) {
 
 campanhaOptController.updateStateDonation = function (req, res) {
     var campanha = "";
-    console.log(req.body);
+    var campID = req.body.campId;
     var details = JSON.stringify(req.body);
     var options = {
         hostname: 'localhost',
@@ -404,6 +407,7 @@ campanhaOptController.updateStateDonation = function (req, res) {
     console.log(details);
     req.write(details);
     req.end();
+    res.redirect("/admin/InfoCamp/" + campID);
 };
 
 

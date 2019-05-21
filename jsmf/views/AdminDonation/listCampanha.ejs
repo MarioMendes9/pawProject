@@ -39,7 +39,9 @@
                         <% var totalDonation=0 %>
                         <% for(var j = 0;j<campanhas[i].donations.length;j++){ %>
 
+                        <% if(campanhas[i].donations[j].estado == true) {%>
                         <% totalDonation += campanhas[i].donations[j].montante %>
+                        <% } %>
 
                         <% } %>
                         <% } %>

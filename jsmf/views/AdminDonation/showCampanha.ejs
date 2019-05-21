@@ -33,7 +33,9 @@
                     </tr>
                     <tr>
                         <td>Logo Name</td>
-                        <td><div name="logoName"><%= campanha.logoName %></div></td>
+                        <td>
+                            <div name="logoName"><%= campanha.logoName %></div>
+                        </td>
                     </tr>
                     <tr>
                         <td>IBAN</td>
@@ -75,15 +77,14 @@
                                     <td><%= i + 1 %></td>
                                     <td><%= campanha.donations[i].user %></td>
                                     <td><%= campanha.donations[i].montante %></td>
-                                    <% if(campanha.estado == true){%>
+                                    <% if(campanha.donations[i].estado == true){%>
                                     <td>Confirmado</td>
+                                    <% totalDonation += campanha.donations[i].montante %>
                                     <% } else { %>
                                     <td>Nao Confirmado</td>
                                     <%} %>
 
-                                    <% totalDonation += campanha.donations[i].montante %>
-                                </tr>
-                                <% } %>
+                                    <% } %>
                                 <tr>
                                     <td colspan="5">Donation Total : <%= totalDonation %></td>
                                 </tr>
@@ -110,10 +111,17 @@
             </table>
             <br>
             <h3><a href="/admin/editCamp/<%= campanha._id%>">EDIT Campanha</a></h3>
+            <% if (totalDonation>0) {%>
             <form action="/admin/deleteCamp/<%= campanha._id%>" method="POST">
                 <input type="hidden" name="logoName" value="<%= campanha.logoName %>">
                 <button type="submit" class="btn btn-danger">DELETE</button>
             </form>
+            <% } else { %>
+            <form action="/admin/deleteCamp/<%= campanha._id%>" method="POST">
+                <input type="hidden" name="logoName" value="<%= campanha.logoName %>">
+                <button type="submit" class="btn btn-danger" disabled>DELETE</button>
+            </form>
+            <% } %>
         </div>
     </div>
 </body>
