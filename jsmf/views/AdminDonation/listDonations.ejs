@@ -39,17 +39,19 @@
                                 <select name="estado" id="exampleFormControlSelect1">
                                     <% if(campanha.donations[i].estado == true){ %>
                                     <option value="true">Confirmado</option>
-                                    <option value="false">Não Confirmado</option>
+                                    <option value="false">Nao Confirmado</option>
                                     <% } else {%>
-                                    <option value="false">Não Confirmado</option>
+                                    <option value="false">Nao Confirmado</option>
                                     <option value="true">Confirmado</option>
                                     <% } %>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <form action="/admin/deleteDonate" method="POST">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                            </td>
+                            <td>
+                                <a href="/admin/deleteDonation/<%= campanha.donations[i]._id %>">Delete
+                                </a>
+
                             </td>
                         </tr>
                     </form>
