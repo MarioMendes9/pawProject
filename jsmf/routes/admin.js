@@ -45,19 +45,22 @@ router.get('/showInfo/:id', userOptions.allInfo);
 router.get('/ManageDonations', campOptions.manage);
 
 router.get('/getCampanhas', campOptions.getAll);
-
-router.get('/Campanha/:id', campOptions.getCampById);
+/**
+ * Info de uma campanha
+ */
+router.get('/InfoCamp/:id', campOptions.getCampById);
 
 router.get('/newCamp', campOptions.newCamp);
 router.post('/newCamp', campOptions.create);
 
-router.delete('/deleteCamp/:id', campOptions.delete);
+router.post('/deleteCamp/:id', campOptions.delete);
 
 router.post('/CampDonate', campOptions.addDonation);
 
 router.post('/UpdateDonate', campOptions.updateStateDonation);
 
 router.post('/editCamp/:id',campOptions.editCamp);
+
 
 
 module.exports = router;
