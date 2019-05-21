@@ -35,19 +35,30 @@
 
                             <td><input type="number" name="montante" value="<%= campanha.donations[i].montante %>" />
                             </td>
-                            <td><input type="text" name="estado" value="<%= campanha.donations[i].estado %>" />
+                            <td>
+                                <select name="estado" id="exampleFormControlSelect1">
+                                    <% if(campanha.donations[i].estado == true){ %>
+                                    <option value="true">Confirmado</option>
+                                    <option value="false">Não Confirmado</option>
+                                    <% } else {%>
+                                    <option value="false">Não Confirmado</option>
+                                    <option value="true">Confirmado</option>
+                                    <% } %>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary">Update</button>
+                                <form action="/admin/deleteDonate" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     </form>
 
-                        <% totalDonation += campanha.donations[i].montante %>
-                        <% } %>
+                    <% totalDonation += campanha.donations[i].montante %>
+                    <% } %>
 
-                        <% } %>
-                   
+                    <% } %>
+
                 </tbody>
             </table>
             <h3>Total : <%= totalDonation %> </h3>
