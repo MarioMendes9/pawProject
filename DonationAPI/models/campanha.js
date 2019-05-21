@@ -10,7 +10,7 @@ var CampanhaSchema = new Schema({
         description: { type: String },
         targetValue: { type: Number },
         logoName: { type: String },
-        IBAN: { type: String },
+        IBAN: { type: String, unique:true },
         responsaveis: [{ type: String }],
         donations: [{
                 user: { type: String },

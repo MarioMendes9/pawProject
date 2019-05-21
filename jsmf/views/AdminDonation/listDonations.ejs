@@ -32,7 +32,7 @@
                         <input type="hidden" name="campId" value="<%= campanha._id%>">
                         <input type="hidden" name="donateId" value="<%= campanha.donations[i]._id %>">
                         <tr>
-                            <td><%= campanha.donations[i].user%></td>
+                            <td><a href="/admin/showByUsername/<%= campanha.donations[i].user%>"><%= campanha.donations[i].user%></a></td>
 
                             <td><input type="number" name="montante" value="<%= campanha.donations[i].montante %>" />
                             </td>

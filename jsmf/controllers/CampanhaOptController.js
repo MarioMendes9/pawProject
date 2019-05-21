@@ -80,8 +80,10 @@ campanhaOptController.getCampById = function (req, res) {
 
 
 campanhaOptController.delete = function (req, res) {
+
     var filen = req.params.id;
 
+  
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -95,10 +97,9 @@ campanhaOptController.delete = function (req, res) {
             res.setEncoding('utf-8');
             res.on('data', (d) => {
                 var campanha = JSON.parse(d);
-                console.log(campanha);
+                //Se conseguir apagar a campanha
                 if (campanha.n == 1) {
                     const filePath = path.join(__dirname, "../public/images/logoCamp/" + filen);
-                    console.log(filePath);
                     fs.unlinkSync(filePath);
                 }
                 resolve();
@@ -124,21 +125,33 @@ campanhaOptController.newCamp = function (req, res) {
 
 
 campanhaOptController.create = function (req, res) {
+    var newFileName;
     var form = new multiparty.Form();
-    form.parse(req, function (err, fields, files) {
-        var oldpath = files.logo[0].path;
-        const newPath = path.join(__dirname, "../public/images/logoCamp/" + files.logo[0].originalFilename);
-        fs.rename(oldpath, newPath, function (err) {
-            if (err) throw err;
-            console.log("done file saved");
+
+    var p2 = new Promise(function (resolve, reject) {
+        form.parse(req, function (err, fields, files) {
+            const dir = path.join(__dirname, "../public/images/logoCamp");
+            var oldpath = files.logo[0].path;
+            var originalFile = files.logo[0].originalFilename;
+            fs.readdir(dir, function (err, files) {
+                newFileName = "log" + (files.length) + originalFile.substr(originalFile.length - 4);
+                var newPath = path.join(__dirname, "../public/images/logoCamp/" + newFileName);
+                fs.rename(oldpath, newPath, function (err) {
+                    if (err) throw err;
+                    console.log("done file saved");
+                    resolve(fields);
+                });
+            });
         });
 
+    });
 
+    p2.then(function (fields) {
 
         var creatCamp = {
             description: fields.description[0],
             targetValue: parseInt(fields.targetValue[0]),
-            logoName: files.logo[0].originalFilename,
+            logoName: newFileName,
             IBAN: fields.IBAN[0],
             responsaveis: fields["responsaveis[]"]
 
@@ -182,6 +195,9 @@ campanhaOptController.create = function (req, res) {
         });
 
     });
+
+
+
 
 };
 
