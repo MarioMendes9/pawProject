@@ -55,11 +55,16 @@ router.post('/newCamp', campOptions.create);
 
 router.post('/deleteCamp/:id', campOptions.delete);
 
+
+router.get("/editDonations/:id",campOptions.sendEditDonation);
+
 router.post('/CampDonate', campOptions.addDonation);
 
 router.post('/UpdateDonate', campOptions.updateStateDonation);
 
-
+/**
+ * Editar uma campanha
+ */
 router.get('/editCamp/:id',campOptions.sendEditCamp);
 
 router.post('/editCamp/:id',campOptions.editCamp);

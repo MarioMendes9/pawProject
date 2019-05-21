@@ -44,5 +44,5 @@ router.get('/getCampanha/:id', campanhaController.getByIdCampanha);
  */
 
 
- router.post('/updateCampanha/:id',campanhaController.updateCampanha);
+ router.post('/updateCampanha',campanhaController.updateCampanha);
 module.exports = router;

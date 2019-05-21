@@ -266,7 +266,7 @@ campanhaOptController.sendEditCamp = function (req, res) {
 
 
 
-}
+};
 
 campanhaOptController.editCamp = function (req, res) {
     var form = new multiparty.Form();
@@ -357,10 +357,72 @@ campanhaOptController.editCamp = function (req, res) {
 };
 
 campanhaOptController.updateStateDonation = function (req, res) {
+    var campanha = "";
+    console.log(req.body);
+    var details = JSON.stringify(req.body);
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/updateStateDonation',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Content-Length': details.length
+        }
+    };
 
+
+    var req = http.request(options, (res) => {
+        console.log(`statusCode:${res.statusCode}`);
+        res.setEncoding('utf-8');
+
+        res.on('data', (d) => {
+            campanha += d;
+            console.log(campanha);
+        });
+    });
+
+    req.on('error', (error) => {
+        console.log(error);
+    });
+    console.log(details);
+    req.write(details);
+    req.end();
 };
 
 
+campanhaOptController.sendEditDonation=function(req,res){
+    var campanha = "";
+
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/getCampanha/' + req.params.id,
+    }
+
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanha += d;
+                resolve();
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
+        });
+    });
+
+
+    p1.then(function () {
+        console.log(campanha);
+        res.render("../views/AdminDonation/listDonations", { campanha: JSON.parse(campanha) });
+    });
+
+
+}
 
 
 module.exports = campanhaOptController;
