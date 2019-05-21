@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var path = require('path');
 var http = require('http');
-var formidable = require('formidable');
 var fs = require('fs');
 var multiparty = require('multiparty');
 var campanhaOptController = {};
@@ -235,11 +234,85 @@ campanhaOptController.addDonation = function (req, res) {
 };
 
 campanhaOptController.updateStateDonation = function (req, res) {
-
+    
 };
 
 
+campanhaOptController.sendEditCamp=function(req,res){
+    var campanha = "";
+    
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/getCampanha/' + req.params.id,
+    }
+
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanha += d;
+                resolve();
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
+        });
+    });
+
+
+    p1.then(function () {
+        console.log(campanha);
+        res.render("../views/AdminDonation/editCampanhas", { campanha: JSON.parse(campanha) });
+    });
+
+
+
+    
+}
+
 campanhaOptController.editCamp = function (req, res) {
+    var details=JSON.stringify(req.body);
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/updateCampanha/'+req.params.id,
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Content-Length': JSON.stringify(req.body).length
+        }
+    };
+    // console.log(details);
+    var campanha="";
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.request(options, (res) => {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+
+            res.on('data', (d) => {
+                campanha += d;
+                resolve();
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
+            reject();
+        });
+        console.log(details);
+
+        req.write(details);
+        req.end();
+    });
+
+    p1.then(function () {
+        res.redirect("/admin/InfoCamp/" + req.params.id);
+    });
+
+
 
 };
 
