@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var path = require('path');
 var http = require('http');
+var formidable = require('formidable');
 var fs = require('fs');
 var multiparty = require('multiparty');
 var campanhaOptController = {};
@@ -27,7 +28,7 @@ campanhaOptController.getAll = function (req, res) {
             res.on('data', function (d) {
                 campanhas += d;
                 resolve();
-               
+
             });
         });
 
@@ -36,10 +37,9 @@ campanhaOptController.getAll = function (req, res) {
         });
 
     });
-    p1.then(function(){
-        console.log(campanhas);
-        res.render("../views/AdminDonation/listCampanha", { campanhas: campanhas });
-        
+    p1.then(function () {
+        res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas) });
+
     });
 
 };
@@ -55,19 +55,27 @@ campanhaOptController.getCampById = function (req, res) {
         port: 8080,
         path: '/api/v1/getCampanha/' + req.params.id,
     }
-    var req = http.get(options, function (res) {
-        console.log(`statusCode:${res.statusCode}`);
-        res.setEncoding('utf-8');
-        res.on('data', function (d) {
-            campanha += d;
-            console.log(campanha);
+
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanha += d;
+                resolve();
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
         });
     });
 
-    req.on('error', (error) => {
-        console.log(error);
-    });
 
+    p1.then(function () {
+
+        res.render("../views/AdminDonation/showCampanha", { campanha: JSON.parse(campanha) });
+    });
 };
 
 
@@ -81,22 +89,28 @@ campanhaOptController.delete = function (req, res) {
         method: 'DELETE',
     };
 
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.request(options, (res) => {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
 
-    var req = http.request(options, (res) => {
-        console.log(`statusCode:${res.statusCode}`);
-        res.setEncoding('utf-8');
-
-        res.on('data', (d) => {
-            campanha += d;
-            console.log(campanha);
+            res.on('data', (d) => {
+                campanha += d;
+                resolve();
+            });
         });
-    });
 
-    req.on('error', (error) => {
-        console.log(error);
-    });
-    console.log("aqui");
-    req.end();
+        req.on('error', (error) => {
+            console.log(error);
+        });
+        req.end();
+
+    })
+
+    p1.then(function () {
+        res.redirect("/admin/getCampanhas");
+    })
+
 
 
 
@@ -128,8 +142,6 @@ campanhaOptController.create = function (req, res) {
 
         };
 
-
-        console.log(creatCamp);
         var details = JSON.stringify(creatCamp);
         var options = {
             hostname: 'localhost',
@@ -143,29 +155,35 @@ campanhaOptController.create = function (req, res) {
         };
         // console.log(details);
         var campanha = "";
-        var req = http.request(options, (res) => {
-            console.log(`statusCode:${res.statusCode}`);
-            res.setEncoding('utf-8');
+        var p1 = new Promise(function (resolve, reject) {
+            var req = http.request(options, (res) => {
+                console.log(`statusCode:${res.statusCode}`);
+                res.setEncoding('utf-8');
 
-            res.on('data', (d) => {
-                campanha += d;
-                console.log(campanha);
+                res.on('data', (d) => {
+                    campanha += d;
+                    resolve();
+                });
             });
+
+            req.on('error', (error) => {
+                console.log(error);
+            });
+
+
+            req.write(details);
+            req.end();
         });
 
-        req.on('error', (error) => {
-            console.log(error);
+        p1.then(function () {
+            res.redirect("/admin/ManageDonations");
         });
-        console.log(details);
-
-        req.write(details);
-        req.end();
-
-
 
     });
 
 };
+
+
 campanhaOptController.addDonation = function (req, res) {
     var campanha = "";
 
