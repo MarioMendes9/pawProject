@@ -125,7 +125,6 @@ campanhaController.deleteDonation = function (req, res) {
             console.log(err);
         }
         else {
-            console.log(result);
             res.json(result);
         }
     });

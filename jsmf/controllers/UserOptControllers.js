@@ -100,6 +100,18 @@ userOptController.allInfo = function (req, res) {
     });
 };
 
+userOptController.findByUsername=function(req,res){
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) {
+            next(err);
+        }
+        else {
+            console.log(user);
+            res.render("../views/AdminUsers/showUser", { user: user });
+        }
+    });
+}
+
 module.exports = userOptController;
 
 

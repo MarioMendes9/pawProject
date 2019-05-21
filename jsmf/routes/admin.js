@@ -34,6 +34,8 @@ router.post('/delete/:id', userOptions.delete);
 
 router.get('/showInfo/:id', userOptions.allInfo);
 
+router.get('/showByUsername/:username',userOptions.findByUsername);
+
 
 /*****************************************************************************
  * ALMOST DONE A PARTE EM CIMA
