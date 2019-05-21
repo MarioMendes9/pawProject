@@ -7,7 +7,6 @@ var campanhaController = {};
  * Criar uma camapanha 
  */
 campanhaController.createCampanha = function (req, res, next) {
-    console.log(req.body);
     var campanha = new Campanha(req.body);
 
     campanha.save(function (err) {
@@ -25,13 +24,11 @@ campanhaController.createCampanha = function (req, res, next) {
  */
 
 campanhaController.deleteCampanha = function (req, res) {
-    console.log("id: " + req.params.id);
     Campanha.deleteOne({ _id: req.params.id }, function (err, result) {
         if (err) {
             console.log(err);
         }
         else {
-            console.log("Doaçao deleted!");
             res.json(result);
         }
     });
@@ -61,7 +58,6 @@ campanhaController.getByIdCampanha = function (req, res, next) {
         if (err) {
             next(err);
         } else {
-            //console.log(campanha);
             res.json(campanha);
         }
     });
@@ -93,8 +89,9 @@ campanhaController.addDonation = function (req, res, next) {
  */
 
 campanhaController.updateStateDonation = function (req, res, next) {
+    console.log(req.body);
     Campanha.findOneAndUpdate({ "donations._id": req.body.donateId },
-        { $set: { 'donations.$.estado': req.body.estado } }, { new: true }, function (err, donation) {
+        { $set: { 'donations.$.estado': req.body.estado,'donations.$.montante':req.body.montante } }, { new: true }, function (err, donation) {
             if (err) {
                 next(err);
             }
@@ -107,8 +104,6 @@ campanhaController.updateStateDonation = function (req, res, next) {
 
 
 campanhaController.updateCampanha = function (req, res) {
-    console.log(req.params.id);
-    console.log(req.body);
     Campanha.findByIdAndUpdate(req.params.id, {
         $set: {
             estado: req.body.estado, description: req.body.description,
@@ -118,7 +113,6 @@ campanhaController.updateCampanha = function (req, res) {
         if (err) {
             res.json(err);
         }
-        console.log(camp);
         res.json(camp);
     });
 };
