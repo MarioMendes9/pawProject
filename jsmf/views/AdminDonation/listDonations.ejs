@@ -29,6 +29,7 @@
 
                     <% for(var i = 0;i<campanha.donations.length;i++) { %>
                     <form action="/admin/UpdateDonate" method="POST">
+                        <input type="hidden" name="campId" value="<%= campanha._id%>">
                         <input type="hidden" name="donateId" value="<%= campanha.donations[i]._id %>">
                         <tr>
                             <td><%= campanha.donations[i].user%></td>
@@ -55,10 +56,13 @@
                             </td>
                         </tr>
                     </form>
+                    <% if(campanha.donations[i].estado == true){ %>
 
                     <% totalDonation += campanha.donations[i].montante %>
+
                     <% } %>
 
+                    <% } %>
                     <% } %>
 
                 </tbody>

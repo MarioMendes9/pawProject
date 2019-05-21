@@ -58,7 +58,11 @@
         <h1>Lista das campanhas</h1>
 
         <% if(campanha.length>0) { %>
+        <% var count = 0 %>
         <% for(var i=0;i<campanha.length;i++) { %>
+
+        <% if(campanha[i].estado == true) { %>
+        <% count++ %>
         <form action="/admin/CampDonate" method="POST">
             <div class="card">
                 <div class="card-body">
@@ -95,7 +99,10 @@
         </form>
 
     </div>
-    </div>
+    <% } %>
+    <% } %>
+    <% if(count == 0) { %>
+    <div>Não Existem Campanhas.</div>
     <% } %>
     <% } else { %>
     <div>Não Existem Campanhas.</div>
