@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td>Logo Name</td>
-                        <td><%= campanha.logoName %></td>
+                        <td><div name="logoName"><%= campanha.logoName %></div></td>
                     </tr>
                     <tr>
                         <td>IBAN</td>
@@ -103,6 +103,7 @@
             <br>
             <h3><a href="/admin/editCamp/<%= campanha._id%>">EDIT Campanha</a></h3>
             <form action="/admin/deleteCamp/<%= campanha._id%>" method="POST">
+                <input type="hidden" name="logoName" value="<%= campanha.logoName %>">
                 <button type="submit" class="btn btn-danger">DELETE</button>
             </form>
         </div>

@@ -44,5 +44,7 @@ router.get('/getCampanha/:id', campanhaController.getByIdCampanha);
  */
 
 
- router.post('/updateCampanha',campanhaController.updateCampanha);
+ router.post('/updateCampanha/:id',campanhaController.updateCampanha);
+
+ router.delete('/deleteDonation/:id',campanhaController.deleteDonation);
 module.exports = router;

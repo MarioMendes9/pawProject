@@ -80,7 +80,8 @@ campanhaOptController.getCampById = function (req, res) {
 
 
 campanhaOptController.delete = function (req, res) {
-    var campanha = "";
+    var filen=req.params.id;
+
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -92,9 +93,14 @@ campanhaOptController.delete = function (req, res) {
         var req = http.request(options, (res) => {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
-
             res.on('data', (d) => {
-                campanha += d;
+                var campanha = JSON.parse(d);
+                console.log(campanha);
+                if (campanha.n == 1) {
+                    const filePath = path.join(__dirname, "../public/images/logoCamp/" + filen);
+                    console.log(filePath);
+                    fs.unlinkSync(filePath);
+                }
                 resolve();
             });
         });
@@ -108,10 +114,7 @@ campanhaOptController.delete = function (req, res) {
 
     p1.then(function () {
         res.redirect("/admin/getCampanhas");
-    })
-
-
-
+    });
 
 };
 
@@ -372,30 +375,22 @@ campanhaOptController.updateStateDonation = function (req, res) {
     };
 
 
-    var p1 = new Promise(function (resolve, reject) {
-        var req = http.request(options, (res) => {
-            console.log(`statusCode:${res.statusCode}`);
-            res.setEncoding('utf-8');
+    var req = http.request(options, (res) => {
+        console.log(`statusCode:${res.statusCode}`);
+        res.setEncoding('utf-8');
 
-            res.on('data', (d) => {
-                campanha += d;
-                console.log(campanha);
-                resolve();
-            });
+        res.on('data', (d) => {
+            campanha += d;
+            console.log(campanha);
         });
-
-        req.on('error', (error) => {
-            console.log(error);
-        });
-        console.log(details);
-        req.write(details);
-        req.end();
     });
 
-    p1.then(function () {
-        res.redirect("/admin/getCampanhas");
+    req.on('error', (error) => {
+        console.log(error);
     });
-
+    console.log(details);
+    req.write(details);
+    req.end();
 };
 
 
@@ -430,7 +425,42 @@ campanhaOptController.sendEditDonation = function (req, res) {
     });
 
 
-}
+};
+
+
+campanhaOptController.deleteDonation = function (req, res) {
+    var campanha = "";
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/deleteDonation/' + req.params.id,
+        method: 'DELETE',
+    };
+    console.log(options);
+
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.request(options, (res) => {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+
+            res.on('data', (d) => {
+                campanha += d;
+                resolve();
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
+        });
+        req.end();
+
+    })
+
+    p1.then(function () {
+        res.redirect("/admin/getCampanhas");
+    });
+
+};
 
 
 module.exports = campanhaOptController;

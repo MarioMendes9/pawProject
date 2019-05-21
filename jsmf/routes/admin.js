@@ -55,6 +55,8 @@ router.post('/newCamp', campOptions.create);
 
 router.post('/deleteCamp/:id', campOptions.delete);
 
+router.get('/deleteDonation/:id',campOptions.deleteDonation);
+
 
 router.get("/editDonations/:id",campOptions.sendEditDonation);
 
