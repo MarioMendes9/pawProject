@@ -56,7 +56,7 @@ userOptController.edit = function (req, res) {
         if (err) {
             console.log("Emplooyee:" + user);
             console.log(err);
-            res.render("../views/AdminUsers/edit", { employee: req.body });
+            res.render("../views/AdminUsers/editUser", { employee: req.body });
         }
         console.log("Aquiiii");
         res.redirect("/admin/showInfo/" + user.id);

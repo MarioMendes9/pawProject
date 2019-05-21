@@ -39,5 +39,10 @@ router.delete('/deleteCampanha/:id', campanhaController.deleteCampanha);
 
 router.get('/getCampanha/:id', campanhaController.getByIdCampanha);
 
+/**
+ * Update numa campanha
+ */
 
+
+ router.post('/updateCampanha/:id',campanhaController.updateCampanha);
 module.exports = router;

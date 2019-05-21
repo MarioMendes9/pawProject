@@ -107,20 +107,19 @@ campanhaController.updateStateDonation = function (req, res, next) {
 
 
 campanhaController.updateCampanha = function (req, res) {
+    console.log(req.params.id);
+    console.log(req.body);
     Campanha.findByIdAndUpdate(req.params.id, {
         $set: {
             estado: req.body.estado, description: req.body.description,
-            targetValue: req.body.targetValue, logoName: req.body.logoName, IBAN: req.body.IBAN, responsaveis: req.body.responsaveis,
-            donations:req.body.donations
+            targetValue: req.body.targetValue, logoName: req.body.logoName, IBAN: req.body.IBAN, responsaveis: req.body.responsaveis
         }
     }, { new: true }, function (err, camp) {
         if (err) {
-            console.log("campanha:" + camp);
-            console.log(err);
-            res.render("../views/AdminUsers/edit", { campanha: req.body });
+            res.json(err);
         }
-        console.log("Aquiiii");
-        res.redirect("/admin/Campanha/" + camp.id);
+        
+        res.json(camp);
     });
 };
 

@@ -59,8 +59,10 @@ router.post('/CampDonate', campOptions.addDonation);
 
 router.post('/UpdateDonate', campOptions.updateStateDonation);
 
-router.post('/editCamp/:id',campOptions.editCamp);
 
+router.get('/editCamp/:id',campOptions.sendEditCamp);
+
+router.post('/editCamp/:id',campOptions.editCamp);
 
 
 module.exports = router;

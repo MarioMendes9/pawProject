@@ -35,14 +35,15 @@
                         <td><%= campanhas[i].IBAN%></td>
 
 
-
+                        <% if( campanhas[i].donations != null) { %>
                         <% var totalDonation=0 %>
                         <% for(var j = 0;j<campanhas[i].donations.length;j++){ %>
 
                         <% totalDonation += campanhas[i].donations[j].montante %>
 
                         <% } %>
-                        <td><a href="DEFENIR" class="nameList"><%= totalDonation%></a></td>
+                        <% } %>
+                        <td><%= totalDonation%></td>
                         <td><a href="/admin/InfoCamp/<%= campanhas[i]._id%>">Show Detaisl</a></td>
                     </tr>
                     <% } %>
