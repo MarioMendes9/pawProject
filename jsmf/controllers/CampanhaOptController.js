@@ -233,14 +233,9 @@ campanhaOptController.addDonation = function (req, res) {
 
 };
 
-campanhaOptController.updateStateDonation = function (req, res) {
-    
-};
-
-
-campanhaOptController.sendEditCamp=function(req,res){
+campanhaOptController.sendEditCamp = function (req, res) {
     var campanha = "";
-    
+
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -270,51 +265,102 @@ campanhaOptController.sendEditCamp=function(req,res){
 
 
 
-    
+
 }
 
 campanhaOptController.editCamp = function (req, res) {
-    var details=JSON.stringify(req.body);
-    var options = {
-        hostname: 'localhost',
-        port: 8080,
-        path: '/api/v1/updateCampanha/'+req.params.id,
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            'Content-Length': JSON.stringify(req.body).length
-        }
-    };
-    // console.log(details);
-    var campanha="";
-    var p1 = new Promise(function (resolve, reject) {
-        var req = http.request(options, (res) => {
-            console.log(`statusCode:${res.statusCode}`);
-            res.setEncoding('utf-8');
-
-            res.on('data', (d) => {
-                campanha += d;
-                resolve();
+    var form = new multiparty.Form();
+    form.parse(req, function (err, fields, files) {
+        var upCamp;
+        if (files.logo[0].originalFilename != "") {
+            fields.logoName = files.logo[0].originalFilename;
+            var oldpath = files.logo[0].path;
+            const newPath = path.join(__dirname, "../public/images/logoCamp/" + files.logo[0].originalFilename);
+            fs.rename(oldpath, newPath, function (err) {
+                if (err) throw err;
+                console.log("done file saved");
             });
+            
+            console.log(fields);
+            upCamp = {
+                estado:fields.estado[0],
+                description: fields.description[0],
+                targetValue: parseInt(fields.targetValue[0]),
+                logoName: files.logo[0].originalFilename,
+                IBAN: fields.IBAN[0],
+                responsaveis: fields.responsaveis
+    
+            };
+       
+        }
+        else {
+            var tempName=fields.oldLog[0];
+            delete fields["LogoName"];
+            fields.logoName= tempName;
+
+            upCamp = {
+                estado:fields.estado[0],
+                description: fields.description[0],
+                targetValue: parseInt(fields.targetValue[0]),
+                logoName: fields.oldLog[0],
+                IBAN: fields.IBAN[0],
+                responsaveis: fields.responsaveis
+    
+            };
+        }
+        console.log(upCamp);
+        var details = JSON.stringify(upCamp);
+        var options = {
+            hostname: 'localhost',
+            port: 8080,
+            path: '/api/v1/updateCampanha/' + req.params.id,
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'Content-Length': details.length
+            }
+        };
+        // console.log(details);
+        var campanha = "";
+        var p1 = new Promise(function (resolve, reject) {
+            var req = http.request(options, (res) => {
+                console.log(`statusCode:${res.statusCode}`);
+                res.setEncoding('utf-8');
+
+                res.on('data', (d) => {
+                    campanha += d;
+                    resolve();
+                });
+            });
+
+            req.on('error', (error) => {
+                console.log(error);
+                reject();
+            });
+            console.log(details);
+
+            req.write(details);
+            req.end();
         });
 
-        req.on('error', (error) => {
-            console.log(error);
-            reject();
+        p1.then(function () {
+            res.redirect("/admin/InfoCamp/" + req.params.id);
         });
-        console.log(details);
 
-        req.write(details);
-        req.end();
+
+
+
+
     });
-
-    p1.then(function () {
-        res.redirect("/admin/InfoCamp/" + req.params.id);
-    });
-
 
 
 };
+
+campanhaOptController.updateStateDonation = function (req, res) {
+
+};
+
+
 
 
 module.exports = campanhaOptController;

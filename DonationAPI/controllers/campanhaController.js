@@ -114,11 +114,11 @@ campanhaController.updateCampanha = function (req, res) {
             estado: req.body.estado, description: req.body.description,
             targetValue: req.body.targetValue, logoName: req.body.logoName, IBAN: req.body.IBAN, responsaveis: req.body.responsaveis
         }
-    }, { new: true }, function (err, camp) {
+    },{new: true}, function (err, camp) {
         if (err) {
             res.json(err);
         }
-        
+        console.log(camp);
         res.json(camp);
     });
 };
