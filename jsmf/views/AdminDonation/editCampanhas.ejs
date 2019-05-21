@@ -18,7 +18,7 @@
                     <tbody>
                         <tr>
                             <td>Estado</td>
-                            <td><input type="text" name="estado" value="<%= campanhas.Estado %>" /></td>
+                            <td><input type="text" name="estado" value="<%= campanhas.estado %>" /></td>
                         </tr>
                         <tr>
                             <td>Description</td>
@@ -30,11 +30,11 @@
                             <td><input type="number" name="targetValue" value="<%= campanhas.targetValue %>" /></td>
                         </tr>
                         <td>logoName</td>
-                        <td><input type="file" id="file" name="file" multiple><% campanhas.logoName %></td>
+                        <td><input type="file" id="file" name="file"><%= campanhas.logoName %></td>
                         </tr>
                         <tr>
                             <td>IBAN</td>
-                            <td><input type="text" name="nomeCompleto" value="<%= campanhas.iban %>" /></td>
+                            <td><input type="text" name="nomeCompleto" value="<%= campanhas.IBAN %>" /></td>
                         </tr>
                         <tr>
                             <td>Responsaveis</td>

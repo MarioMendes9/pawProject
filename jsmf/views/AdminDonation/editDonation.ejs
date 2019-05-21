@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Edit Campanhas</title>
+    <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="justify-content-md-center">
+            <h3><a href="/admin/DEFENIR">Donation List</a></h3>
+            <h1 class="font-weight-bold">Edit Donation</h1>
+            <form action="DEFENIR" method="post">
+                <table class="table table-striped table-bordered table-dark">
+                    <tbody>
+                        <% if(campanha.length > 0){ %>
+                        <% var totalDonation=0 %>
+
+                        <% for(var i = 0;i<campanha.donations.length;i++) { %>
+
+                        <tr>
+                            <td>User</td>
+                            <td><input type="text" name="user" value="<%= campanha.donations.user[i] %>" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>Montante</td>
+                            <td><input type="number" name="montante" value="<%= campanhas.donations.montante[i] %>" />
+                            </td>
+                        </tr>
+                        <% totalDonation += campanha.donations[j].montante %>
+                        <% } %>
+
+                        <tr>
+                            <h3>Total : <%= totalDonation %> </h3>
+                        </tr>
+
+                        <% } %>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
