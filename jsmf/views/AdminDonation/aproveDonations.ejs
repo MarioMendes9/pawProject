@@ -27,30 +27,32 @@
                     <% for(var i=0; i<campanhas.length;i++) { %>
 
                     <% if(campanhas[i].estado == true && campanhas[i].donations != null) { %>
-                    <form action="/admin/UpdateDonate" method="POST">
-                        <tr>
-                            <th scope="row"><%= i + 1%></th>
-                            <td><%= campanhas[i].IBAN%></a></td>
-                            <input type="hidden" name="campId" value="<%= campanhas[i]._id%>" hidden>
-                            <td><%= campanhas[i].description%></td>
 
-                            <td>
+                    <tr>
+                        <th scope="row"><%= i + 1%></th>
+                        <td><%= campanhas[i].IBAN%></a></td>
 
-                                <table class="table table-striped table-bordered table-dark">
+                        <td><%= campanhas[i].description%></td>
 
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">User</th>
-                                            <th scope="col">Montante</th>
-                                            <th scope="col">Estado</th>
-                                            <th scope="col">Alterar Doação</th>
-                                            <th scope="col">Update</th>
-                                        </tr>
-                                    </thead>
+                        <td>
 
-                                    <% for(var j = 0;j<campanhas[i].donations.length;j++) { %>
+                            <table class="table table-striped table-bordered table-dark">
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Montante</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Alterar Doação</th>
+                                        <th scope="col">Update</th>
+                                    </tr>
+                                </thead>
+
+                                <% for(var j = 0;j<campanhas[i].donations.length;j++) { %>
+                                <form action="/admin/UpdateDonate" method="POST">
                                     <% if(campanhas[i].donations[j].estado == false) { %>
+                                    <input type="hidden" name="campId" value="<%= campanhas[i]._id%>" hidden>
                                     <input type="hidden" name="donateId" value="<%= campanhas[i].donations[j]._id %>"
                                         hidden>
                                     <tr>
@@ -70,15 +72,17 @@
                                         <td><button type="submit" class="btn btn-primary">Update</button></td>
                                     </tr>
                                     <% } %>
+                                </form>
                                     <% } %>
-                                </table>
-                            </td>
-                        </tr>
+                                    
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <% } %>
 
-                        <% } %>
+                    <% } %>
 
-                        <% } %>
-                    </form>
                 </tbody>
             </table>
             <% } else { %>

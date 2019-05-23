@@ -82,7 +82,7 @@ campanhaOptController.getCampById = function (req, res) {
 
 campanhaOptController.delete = function (req, res) {
 
-    var filen = req.params.id;
+    var filen = req.body.logoName;
 
 
     var options = {
@@ -101,6 +101,7 @@ campanhaOptController.delete = function (req, res) {
                 //Se conseguir apagar a campanha
                 if (campanha.n == 1) {
                     const filePath = path.join(__dirname, "../public/images/logoCamp/" + filen);
+                    console.log(filePath);
                     fs.unlinkSync(filePath);
                 }
                 resolve();
