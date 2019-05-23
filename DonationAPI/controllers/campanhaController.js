@@ -120,7 +120,7 @@ campanhaController.updateCampanha = function (req, res) {
 
 campanhaController.deleteDonation = function (req, res) {
     console.log(req.params);
-    Campanha.update( {}, { $pull: {donations: {_id:req.params.id}} }, function (err, result) {
+    Campanha.update( {}, { $pull: {donations: {_id:req.params.id}}},{ safe: true, multi:true }, function (err, result) {
         if (err) {
             console.log(err);
         }

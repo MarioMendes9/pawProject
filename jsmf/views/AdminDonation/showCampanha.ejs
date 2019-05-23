@@ -111,7 +111,7 @@
             </table>
             <br>
             <h3><a href="/admin/editCamp/<%= campanha._id%>">EDIT Campanha</a></h3>
-            <% if (totalDonation>0) {%>
+            <% if (totalDonation == 0) {%>
             <form action="/admin/deleteCamp/<%= campanha._id%>" method="POST">
                 <input type="hidden" name="logoName" value="<%= campanha.logoName %>">
                 <button type="submit" class="btn btn-danger">DELETE</button>
