@@ -100,7 +100,7 @@ userOptController.allInfo = function (req, res) {
     });
 };
 
-userOptController.findByUsername=function(req,res){
+userOptController.findByUsername = function (req, res) {
     User.findOne({ username: req.params.username }, function (err, user) {
         if (err) {
             next(err);
