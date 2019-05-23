@@ -52,59 +52,17 @@
     <br>
     <!-- Page Content -->
     <div class="container">
-        <h1>Lista das campanhas</h1>
+        <h1>Trabalho de PAW</h1><br>
+        <h1>Nome :</h1><br>
+        <h1>Numero :</h1><br>
+        <h1>Grupo :</h1><br>
 
-        <% if(campanha.length>0) { %>
-        <% var count = 0 %>
-        <% for(var i=0;i<campanha.length;i++) { %>
-
-        <% if(campanha[i].estado == true) { %>
-        <% count++ %>
-        <form action="/admin/CampDonate" method="POST">
-            <div class="card">
-                <div class="card-body">
-                    <input type="hidden" name="username" value="<%= name %>">
-                    <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
-                    <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
-                    <div id="desc">
-                        </br>
-                        </br>
-                        <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
-                            </br>
-                            <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
-                            <strong>Valor ja engariado: </strong>
-                        </p>
-
-                    </div>
-
-
-                    <div class="justify-content-md-center">
-
-
-                        <div class="col-end">
-
-                            <input type="number" class="form-control" name="montante" id="montante"
-                                placeholder="Montante que deseja doar">
-                        </div>
-
-                        <div class="col-12">
-                            <br>
-                            <button type="submit" class="btn btn-primary">Doar</button>
-                        </div>
-                        <br>
-
-        </form>
-
+        <h1>Nome :</h1><br>
+        <h1>Numero :</h1><br>
+        <h1>Grupo :</h1><br>
     </div>
-    <% } %>
-    <% } %>
-    <% if(count == 0) { %>
-    <div>Não Existem Campanhas.</div>
-    <% } %>
-    <% } else { %>
-    <div>Não Existem Campanhas.</div>
-    <% } %>
-    </div>
+
+
 </body>
 
 </html>

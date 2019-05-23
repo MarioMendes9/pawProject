@@ -34,7 +34,7 @@ router.post('/delete/:id', userOptions.delete);
 
 router.get('/showInfo/:id', userOptions.allInfo);
 
-router.get('/showByUsername/:username',userOptions.findByUsername);
+router.get('/showByUsername/:username', userOptions.findByUsername);
 
 
 /*****************************************************************************
@@ -57,10 +57,10 @@ router.post('/newCamp', campOptions.create);
 
 router.post('/deleteCamp/:id', campOptions.delete);
 
-router.get('/deleteDonation/:id',campOptions.deleteDonation);
+router.get('/deleteDonation/:id', campOptions.deleteDonation);
 
 
-router.get("/editDonations/:id",campOptions.sendEditDonation);
+router.get("/editDonations/:id", campOptions.sendEditDonation);
 
 router.post('/CampDonate', campOptions.addDonation);
 
@@ -69,9 +69,13 @@ router.post('/UpdateDonate', campOptions.updateStateDonation);
 /**
  * Editar uma campanha
  */
-router.get('/editCamp/:id',campOptions.sendEditCamp);
+router.get('/editCamp/:id', campOptions.sendEditCamp);
 
-router.post('/editCamp/:id',campOptions.editCamp);
+router.post('/editCamp/:id', campOptions.editCamp);
 
+/**
+ * Pagina para aprovar doações das campanhas
+ */
+router.get('/confirmDonationsCamp', campOptions.donationsToAprove);
 
 module.exports = router;

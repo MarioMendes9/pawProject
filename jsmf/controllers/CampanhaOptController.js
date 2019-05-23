@@ -83,7 +83,7 @@ campanhaOptController.delete = function (req, res) {
 
     var filen = req.params.id;
 
-  
+
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -479,5 +479,37 @@ campanhaOptController.deleteDonation = function (req, res) {
 
 };
 
+
+campanhaOptController.donationsToAprove = function (req, res) {
+    var campanhas = "";
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/getCampanhas'
+    };
+
+
+    var p1 = new Promise(function (resolve, reject) {
+        var req = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanhas += d;
+                resolve();
+
+            });
+        });
+
+        req.on('error', (error) => {
+            console.log(error);
+        });
+
+    });
+    p1.then(function () {
+        res.render("../views/AdminDonation/aproveDonations", { campanhas: JSON.parse(campanhas) });
+
+    });
+
+};
 
 module.exports = campanhaOptController;
