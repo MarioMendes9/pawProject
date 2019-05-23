@@ -26,6 +26,7 @@ campanhaOptController.getAll = function (req, res) {
             res.setEncoding('utf-8');
             res.on('data', function (d) {
                 campanhas += d;
+                console.log(campanhas);
                 resolve();
 
             });
