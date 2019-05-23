@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../stylesheets/registerStyle.css">
+    <title>Registo</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="justify-content-md-center">
+            
+                <a href="/" class="inicialPage">Pagina Inicial</a>
+
+                <h1>Criação De Conta</h1><br>
+                <% include ./messages %>
+                <form action="/register" method="POST">
+                <label for="username">Username :</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username...." value="<%= typeof user != 'undefined' ? user.username : '' %>" required/>
+
+                </br>
+                <!-- <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email :</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email...">
+                    </div> -->
+
+
+                <label for="password">Password :</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password..." value="<%= typeof user != 'undefined' ? user.password : '' %>" required />
+
+                </br>
+                <label for="IBAN">IBAN :</label>
+                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="(DEFINIR)" value="<%= typeof user!= 'undefined' ? user.IBAN : '' %>" required/>
+
+                </br>
+                <label for="nomeCompleto">Nome completo :</label>
+                <input type="string" class="form-control" name="nomeCompleto" id="nome" placeholder="Nome..." value="<%= typeof user != 'undefined' ? user.nomeCompleto : '' %>" required/>
+
+                </br>
+                <label for="NIF">NIF :</label>
+                <input type="number" class="form-control" name="NIF" id="nif" value="<%= typeof user != 'undefined' ? user.NIF : '' %>" required/>
+
+                </br>
+                <button type="submit" class="btn btn-primary">Registar</button>
+            </form>
+            <p>Have An Account? <a href="/login">Login</a></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
