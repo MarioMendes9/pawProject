@@ -4,9 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const flash=require('connect-flash');
-const session=require('express-session');
-
+const flash = require('connect-flash');
+const session = require('express-session');
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('../DonationAPI/swagger.json');
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -15,14 +16,14 @@ mongoose.connect('mongodb://localhost:27017/User', { useNewUrlParser: true })
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
-var adminRouter=require('./routes/admin');
-var userRouter=require('./routes/user');
+var adminRouter = require('./routes/admin');
+var userRouter = require('./routes/user');
 
 
 var app = express();
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.headers['if-none-match'] = 'no-match-for-this';
-  next();    
+  next();
 });
 
 // view engine setup
@@ -45,16 +46,17 @@ app.use(flash());
 
 //Mensagens
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   next();
 });
 
+app.use('/api-docs-Camp', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/',userRouter);
-app.use("/admin",adminRouter);
+app.use('/', userRouter);
+app.use("/admin", adminRouter);
 
 
 // catch 404 and forward to error handler
