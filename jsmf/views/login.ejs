@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../stylesheets/style.css">
-    <title>Home Page</title>
+    <link rel="stylesheet" href="../stylesheets/registerStyle.css">
+    <title>Log In Page</title>
 </head>
 
 <body>
@@ -16,23 +16,24 @@
     <div class="container">
         <div class="justify-content-md-center">
             <div class="login-form-1">
-                <h3><strong>Login</strong></h3><br>
+                <h3 class="font-weight-bold">Login</h3><br>
                 <% include ./messages %>
                 <form action="/">
                     <div class="form-group">
-                        <label><strong>Email :</strong></label>
-                        <input type="text" class="form-control" placeholder="Introduz o seu email..." />
+                        <label class="font-weight-bold">Username :</label>
+                        <input type="text" class="form-control" name="username" placeholder="Introduz o UserName..." />
                     </div>
                     <div class="form-group">
-                        <label><strong>Password :</strong></label>
-                        <input type="password" class="form-control" placeholder="Introduz a sua password..." />
+                        <label class="font-weight-bold">Password :</label>
+                        <input type="password" class="form-control" name="password"
+                            placeholder="Introduz a sua Password..." />
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btnSubmit" value="Login" />
+                        <input type="submit" class="btn btn-primary" value="Login" />
                     </div>
                     <div class="form-group">
-                        <a href="#" class="ForgetPwd">Esqueci-me da palavra-passe</a><br><br>
-                        Não tem conta? <a href="/register" class="ForgetPwd">Crie uma!</a>
+                        <a href="#" class="inicialPage">Esqueci-me da palavra-passe</a><br><br>
+                        Não tem conta? <a href="/register" class="inicialPage">Crie uma!</a>
                     </div>
                 </form>
             </div>

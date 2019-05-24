@@ -47,14 +47,28 @@ a {
   text-decoration: none;
 }
 
-#logo{
+#logo {
   width: 400px;
   height: 200px;
-  float:left;
-  margin:5px;
+  float: left;
+  margin: 5px;
 }
 
-#desc{
+#desc {
   margin-left: 420px;
-  
+}
+
+.justify-content-md-center {
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(255, 255, 255, 0.2), 0 9px 26px 0 rgba(255, 255, 255, 0.19);
+  background-color: white;
+}
+
+.borderBlack {
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+h1 {
+  text-align: center;
 }
