@@ -3,10 +3,10 @@ var mongoose = require('mongoose');
 var UserSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: { type: String },
-  IBAN: { type: String ,unique:true},
-  localizacao: { type: String,default:"cona"},
+  IBAN: { type: String},
+  localizacao: { type: String},
   nomeCompleto: { type: String },
-  NIF: { type: Number,unique:true },
+  NIF: { type: Number},
   tipoU:{type:String,
         default:'User'}
 });

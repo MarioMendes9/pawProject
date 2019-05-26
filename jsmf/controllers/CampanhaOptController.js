@@ -21,7 +21,7 @@ campanhaOptController.getAll = function (req, res) {
 
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.get(options, function (res) {
+        var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
@@ -32,7 +32,7 @@ campanhaOptController.getAll = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
 
@@ -57,7 +57,7 @@ campanhaOptController.getCampById = function (req, res) {
     }
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.get(options, function (res) {
+        var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
@@ -66,7 +66,7 @@ campanhaOptController.getCampById = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
     });
@@ -93,7 +93,7 @@ campanhaOptController.delete = function (req, res) {
     };
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.request(options, (res) => {
+        var newReq = http.request(options, (res) => {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', (d) => {
@@ -108,10 +108,10 @@ campanhaOptController.delete = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
-        req.end();
+        newReq.end();
 
     })
 
@@ -173,7 +173,7 @@ campanhaOptController.create = function (req, res) {
         // console.log(details);
         var campanha = "";
         var p1 = new Promise(function (resolve, reject) {
-            var req = http.request(options, (res) => {
+            var newReq = http.request(options, (res) => {
                 console.log(`statusCode:${res.statusCode}`);
                 res.setEncoding('utf-8');
 
@@ -183,13 +183,13 @@ campanhaOptController.create = function (req, res) {
                 });
             });
 
-            req.on('error', (error) => {
+            newReq.on('error', (error) => {
                 console.log(error);
             });
 
 
-            req.write(details);
-            req.end();
+            newReq.write(details);
+            newReq.end();
         });
 
         p1.then(function () {
@@ -205,52 +205,63 @@ campanhaOptController.create = function (req, res) {
 
 
 campanhaOptController.addDonation = function (req, res) {
-    var campanha = "";
+    var campanha;
+    var pro = new Promise(function (resolve, reject) {
 
-    console.log(req.body);
 
-    var tempDonation = {
-        donation: {
-            user: req.body.username,
-            montante: req.body.montante
-        },
-        id: req.body.idCampanha
-    }
-
-    var details = JSON.stringify(tempDonation);
-    var options = {
-        hostname: 'localhost',
-        port: 8080,
-        path: '/api/v1/addDonation',
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            'Content-Length': details.length
+        var tempDonation = {
+            donation: {
+                user: req.body.username,
+                montante: req.body.montante
+            },
+            id: req.body.idCampanha
         }
-    };
+
+        var details = JSON.stringify(tempDonation);
+        var options = {
+            hostname: 'localhost',
+            port: 8080,
+            path: '/api/v1/addDonation',
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'Content-Length': details.length
+            }
+        };
 
 
-    var req = http.request(options, (res) => {
-        console.log(`statusCode:${res.statusCode}`);
-        res.setEncoding('utf-8');
+        var newReq = http.request(options, (res) => {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
 
-        res.on('data', (d) => {
-            campanha += d;
-            console.log(campanha);
+            res.on('data', (d) => {
+                campanha = d;
+                console.log(campanha == 'null');
+                if (campanha == 'null') {
+                    reject();
+                } else {
+                    resolve();
+                }
+
+
+            });
         });
+
+        newReq.on('error', (error) => {
+            reject();
+        });
+        newReq.write(details);
+        newReq.end();
+
     });
 
-    req.on('error', (error) => {
-        console.log(error);
+    pro.then(function () {
+        req.flash('success_msg', 'Obrigado pela donation!');
+        res.redirect("/home");
+    }, function () {
+        req.flash('error_msg', 'Pedimos desculpa mas ocorreu um erro, tente mais tarde!');
+        res.redirect("/home");
     });
-    console.log(details);
-    req.write(details);
-    req.end();
-
-    res.redirect("/home");
-
-
-
 
 };
 
@@ -264,7 +275,7 @@ campanhaOptController.sendEditCamp = function (req, res) {
     }
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.get(options, function (res) {
+        var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
@@ -273,7 +284,7 @@ campanhaOptController.sendEditCamp = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
     });
@@ -344,7 +355,7 @@ campanhaOptController.editCamp = function (req, res) {
         // console.log(details);
         var campanha = "";
         var p1 = new Promise(function (resolve, reject) {
-            var req = http.request(options, (res) => {
+            var newReq = http.request(options, (res) => {
                 console.log(`statusCode:${res.statusCode}`);
                 res.setEncoding('utf-8');
 
@@ -354,14 +365,14 @@ campanhaOptController.editCamp = function (req, res) {
                 });
             });
 
-            req.on('error', (error) => {
+            newReq.on('error', (error) => {
                 console.log(error);
                 reject();
             });
             console.log(details);
 
-            req.write(details);
-            req.end();
+            newReq.write(details);
+            newReq.end();
         });
 
         p1.then(function () {
@@ -393,7 +404,7 @@ campanhaOptController.updateStateDonation = function (req, res) {
     };
 
 
-    var req = http.request(options, (res) => {
+    var newReq = http.request(options, (res) => {
         console.log(`statusCode:${res.statusCode}`);
         res.setEncoding('utf-8');
 
@@ -403,12 +414,12 @@ campanhaOptController.updateStateDonation = function (req, res) {
         });
     });
 
-    req.on('error', (error) => {
+    newReq.on('error', (error) => {
         console.log(error);
     });
     console.log(details);
-    req.write(details);
-    req.end();
+    newReq.write(details);
+    newReq.end();
     res.redirect("/admin/InfoCamp/" + campID);
 };
 
@@ -423,7 +434,7 @@ campanhaOptController.sendEditDonation = function (req, res) {
     }
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.get(options, function (res) {
+        var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
@@ -432,7 +443,7 @@ campanhaOptController.sendEditDonation = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
     });
@@ -458,7 +469,7 @@ campanhaOptController.deleteDonation = function (req, res) {
     console.log(options);
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.request(options, (res) => {
+        var newReq = http.request(options, (res) => {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
 
@@ -468,10 +479,10 @@ campanhaOptController.deleteDonation = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
         });
-        req.end();
+        newReq.end();
 
     })
 
@@ -492,7 +503,7 @@ campanhaOptController.donationsToAprove = function (req, res) {
 
 
     var p1 = new Promise(function (resolve, reject) {
-        var req = http.get(options, function (res) {
+        var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
@@ -502,8 +513,9 @@ campanhaOptController.donationsToAprove = function (req, res) {
             });
         });
 
-        req.on('error', (error) => {
+        newReq.on('error', (error) => {
             console.log(error);
+            reject();
         });
 
     });

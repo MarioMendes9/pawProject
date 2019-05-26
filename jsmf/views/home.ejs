@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <title>Home Page</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../images/logo.png" alt="logo" width="400" height="200">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home">Campanhas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact(Ainda Temos que fazer)</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <br>
+
+    <div class="col-md-5 ml-auto">
+        Bem vindo <input type="hidden" name="username"
+            value="<%= user.username %>"><strong><%= user.username %>!</strong> &nbsp;
+        <button type="submit" class="btn btn-secondary"><img src="../images/logo/def.png" alt="def"
+                style="width:20px;height:20px;">
+            Definição</button>
+        <% if(user.tipoU=='Admin') { %>
+        <form action="/admin" method="GET">
+            <button type="submit" class="btn btn-secondary"><img src="../images/logo/def.png" alt="Admin Painel"
+                    style="width:20px;height:20px;">
+                Admin Panel</button>
+        </form>
+        <% } %>
+        <form action="/logout" method="GET">
+            <button type="submit" class="btn btn-secondary"><img src="../images/logo/logout.png" alt="def"
+                    style="width:20px;height:20px;"> Log Out</button>
+        </form>
+    </div>
+    <br>
+    <!-- Page Content -->
+    <div class="container">
+        <% include ./messages %>
+        <h1>Lista das campanhas</h1>
+
+        <% if(campanha.length>0) { %>
+        <% var count = 0 %>
+        <% for(var i=0;i<campanha.length;i++) { %>
+
+        <% if(campanha[i].estado == true) { %>
+        <% count++ %>
+        <form action="/admin/CampDonate" method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <input type="hidden" name="username" value="<%= user.username %>">
+                    <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                    <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
+                    <div id="desc">
+                        </br>
+                        </br>
+                        <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
+                            </br>
+                            <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
+                            <strong>Valor ja engariado: </strong>
+                        </p>
+
+                    </div>
+
+
+                    <div class="justify-content-md-center">
+
+
+                        <div class="col-end">
+
+                            <input type="number" class="form-control" name="montante" id="montante"
+                                placeholder="Montante que deseja doar">
+                        </div>
+
+                        <div class="col-12">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Doar</button>
+                        </div>
+                        <br>
+
+        </form>
+
+    </div>
+    <% } %>
+    <% } %>
+    <% if(count == 0) { %>
+    <div>Não Existem Campanhas.</div>
+    <% } %>
+    <% } else { %>
+    <div>Não Existem Campanhas.</div>
+    <% } %>
+    <h1>De onde doam:</h1>
+    <div id="mapid">
+        <input type="text" id="locc" style="display:none"><%= loca %></p>
+    </div>
+
+
+    <script>
+        var mymap = L.map('mapid').setView([0, 0], 0);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiODE3MDU3MyIsImEiOiJjanRvenltbmgzMDg2M3lycnJpZWJxdWxsIn0.jHpMyICW167U4l6tGPQyZQ'
+        }).addTo(mymap);
+
+
+
+        mymap.setView([41.378138799999995, -8.0683536], 7);
+
+        if ("<%= loca.length>0 %>") {
+            "<% for (var loca of loca) { %>"
+                var lat="<%= loca.lat %>";
+                var lon="<%= loca.lon %>";
+                var marker1 = L.marker([lat,lon]);
+                marker1.addTo(mymap);
+            "<% } %>"
+        }else{
+            alert("aqui");
+            var lat="<%= loca.lat %>";
+                var lon="<%= loca.lon %>";
+                var marker1 = L.marker([lat,lon]);
+                marker1.addTo(mymap);
+        }
+    </script>
+</body>
+
+</html>

@@ -71,7 +71,6 @@ campanhaController.getByIdCampanha = function (req, res, next) {
  */
 
 campanhaController.addDonation = function (req, res, next) {
-    console.log("isto" + req.body.id);
     Campanha.findOneAndUpdate(
         { _id: req.body.id },
         { $push: { donations: req.body.donation } }, { new: true }
@@ -119,8 +118,9 @@ campanhaController.updateCampanha = function (req, res) {
 
 
 campanhaController.deleteDonation = function (req, res) {
-    console.log(req.params);
-    Campanha.update({}, { $pull: { donations: { _id: req.params.id } } }, { safe: true, multi: true }, function (err, result) {
+
+    Campanha.update( {}, { $pull: {donations: {_id:req.params.id}}},{ safe: true, multi:true }, function (err, result) {
+
         if (err) {
             console.log(err);
         }

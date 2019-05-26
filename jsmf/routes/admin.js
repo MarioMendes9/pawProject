@@ -2,39 +2,40 @@ var express = require('express');
 var router = express.Router();
 var userOptions = require("../controllers/UserOptControllers");
 var campOptions = require("../controllers/CampanhaOptController");
+var { adminAuthenticated } = require('../controllers/auth');
 
 
 //Admin board page 
-router.get('/', function (req, res) {
+router.get('/',adminAuthenticated, function (req, res) {
     res.render("../views/AdminUsers/adminOpt");
 });
 
 //manage users
 
-router.get('/ManageUser', userOptions.manage);
+router.get('/ManageUser', adminAuthenticated, userOptions.manage);
 //Get all users 
-router.get('/listUsers', userOptions.list);
+router.get('/listUsers', adminAuthenticated, userOptions.list);
 //Criar utilizador
-router.get('/createUser', userOptions.create);
+router.get('/createUser', adminAuthenticated, userOptions.create);
 
-router.post('/save', userOptions.save);
+router.post('/save', adminAuthenticated, userOptions.save);
 
 //Edit utilizador
 
-router.post('/edit/:id', userOptions.edit);
+router.post('/edit/:id', adminAuthenticated, userOptions.edit);
 
-router.get('/edit/:id', userOptions.showEditUser);
+router.get('/edit/:id', adminAuthenticated, userOptions.showEditUser);
 
 //Delete utilizador
 
-router.post('/delete/:id', userOptions.delete);
+router.post('/delete/:id', adminAuthenticated, userOptions.delete);
 
 
 //Lista donativos/total gasto/ e campanhas de um utilizador
 
-router.get('/showInfo/:id', userOptions.allInfo);
+router.get('/showInfo/:id', adminAuthenticated, userOptions.allInfo);
 
-router.get('/showByUsername/:username', userOptions.findByUsername);
+router.get('/showByUsername/:username', adminAuthenticated, userOptions.findByUsername);
 
 
 /*****************************************************************************
@@ -44,38 +45,38 @@ router.get('/showByUsername/:username', userOptions.findByUsername);
  * Comunicar com a api
  */
 
-router.get('/ManageDonations', campOptions.manage);
+router.get('/ManageDonations', adminAuthenticated, campOptions.manage);
 
-router.get('/getCampanhas', campOptions.getAll);
+router.get('/getCampanhas', adminAuthenticated, campOptions.getAll);
 /**
  * Info de uma campanha
  */
-router.get('/InfoCamp/:id', campOptions.getCampById);
+router.get('/InfoCamp/:id', adminAuthenticated, campOptions.getCampById);
 
-router.get('/newCamp', campOptions.newCamp);
-router.post('/newCamp', campOptions.create);
+router.get('/newCamp', adminAuthenticated, campOptions.newCamp);
+router.post('/newCamp', adminAuthenticated, campOptions.create);
 
-router.post('/deleteCamp/:id', campOptions.delete);
+router.post('/deleteCamp/:id', adminAuthenticated, campOptions.delete);
 
-router.get('/deleteDonation/:id', campOptions.deleteDonation);
+router.get('/deleteDonation/:id', adminAuthenticated, campOptions.deleteDonation);
 
 
-router.get("/editDonations/:id", campOptions.sendEditDonation);
+router.get("/editDonations/:id", adminAuthenticated, campOptions.sendEditDonation);
 
-router.post('/CampDonate', campOptions.addDonation);
+router.post('/CampDonate',campOptions.addDonation);
 
-router.post('/UpdateDonate', campOptions.updateStateDonation);
+router.post('/UpdateDonate', adminAuthenticated, campOptions.updateStateDonation);
 
 /**
  * Editar uma campanha
  */
-router.get('/editCamp/:id', campOptions.sendEditCamp);
+router.get('/editCamp/:id', adminAuthenticated, campOptions.sendEditCamp);
 
-router.post('/editCamp/:id', campOptions.editCamp);
+router.post('/editCamp/:id', adminAuthenticated, campOptions.editCamp);
 
 /**
  * Pagina para aprovar doações das campanhas
  */
-router.get('/confirmDonationsCamp', campOptions.donationsToAprove);
+router.get('/confirmDonationsCamp', adminAuthenticated, campOptions.donationsToAprove);
 
 module.exports = router;

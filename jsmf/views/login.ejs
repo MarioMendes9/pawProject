@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../stylesheets/registerStyle.css">
+
     <title>Log In Page</title>
+
 </head>
 
 <body>
@@ -18,22 +20,25 @@
             <div class="login-form-1">
                 <h3 class="font-weight-bold">Login</h3><br>
                 <% include ./messages %>
-                <form action="/">
+                <form action="/login" method="POST">
                     <div class="form-group">
-                        <label class="font-weight-bold">Username :</label>
-                        <input type="text" class="form-control" name="username" placeholder="Introduz o UserName..." />
+
+                        <label><strong>Username :</strong></label>
+                        <input name="username" type="text" class="form-control" placeholder="Introduz o username..." />
                     </div>
                     <div class="form-group">
-                        <label class="font-weight-bold">Password :</label>
-                        <input type="password" class="form-control" name="password"
-                            placeholder="Introduz a sua Password..." />
+                        <label><strong>Password :</strong></label>
+                        <input name="password" type="password" class="form-control" placeholder="Introduz a sua password..." />
+
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Login" />
                     </div>
                     <div class="form-group">
-                        <a href="#" class="inicialPage">Esqueci-me da palavra-passe</a><br><br>
-                        Não tem conta? <a href="/register" class="inicialPage">Crie uma!</a>
+
+                        
+                        Não tem conta? <a href="/register" class="ForgetPwd">Crie uma!</a>
+
                     </div>
                 </form>
             </div>
