@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var User = require("../models/User");
 var path = require('path');
+var http = require('http');
 
 
 var userOptController = {};
@@ -58,7 +59,6 @@ userOptController.edit = function (req, res) {
             console.log(err);
             res.render("../views/AdminUsers/editUser", { employee: req.body });
         }
-        console.log("Aquiiii");
         res.redirect("/admin/showInfo/" + user.id);
     });
 };
@@ -95,7 +95,35 @@ userOptController.allInfo = function (req, res) {
             next(err);
         }
         else {
-            res.render("../views/AdminUsers/showUser", { user: user });
+            var donates;
+            var options = {
+                hostname: 'localhost',
+                port: 8080,
+                path: '/api/v1/userDonations/' + user.username,
+            }
+        
+            var p1 = new Promise(function (resolve, reject) {
+                var newReq = http.get(options, function (res) {
+                    console.log(`statusCode:${res.statusCode}`);
+                    res.setEncoding('utf-8');
+                    res.on('data', function (d) {
+                        donates=d;
+                        resolve();
+                    });
+                });
+        
+                newReq.on('error', (error) => {
+                    console.log(error);
+                });
+            });
+        
+
+            p1.then(function(){
+                
+                res.render("../views/AdminUsers/showUser", { user: user,donates:JSON.parse(donates) });
+            });
+
+           
         }
     });
 };

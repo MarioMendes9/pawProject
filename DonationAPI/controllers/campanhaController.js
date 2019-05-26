@@ -130,6 +130,19 @@ campanhaController.deleteDonation = function (req, res) {
     });
 };
 
+
+
+campanhaController.getDonationsOneUser=function(req,res,next){
+    console.log(req.params.username);
+    Campanha.find({"donations.user":req.params.username},{_id:1,donations:1},function(err,result){
+        if(err){
+            next(err);
+        }
+        console.log(result);
+        res.json(result);
+    });
+};
+
 module.exports = campanhaController;
 
 

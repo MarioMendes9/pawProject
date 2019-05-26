@@ -41,8 +41,40 @@
                         <td><%= user.tipoU %></td>
                     </tr>
                     <tr>
-                        <td>Total Gastos</td>
-                        <td>Para já é 0 !</td>
+                        <td>Campanha em que efectuou uma doaçao</td>
+                        <td>
+                            <table class="table table-striped table-bordered table-dark">
+                                <tbody>
+
+                                    <% var totalGasto=0 %>
+                                    <% if(donates.length>0) { %>
+                                    <% for(var i=0; i<donates.length;i++) { %>
+                                        <% var count=0 %>
+                                    
+                                    <% for(var j=0; j<donates[i].donations.length;j++) { %>
+                                           
+                                    <% if(donates[i].donations[j].estado==true && donates[i].donations[j].user==user.username ) { %>
+                                    <% totalGasto+=donates[i].donations[j].montante %>
+                                    <% count ++; %>
+
+                                    <% } %>
+                                    <% } %>
+                                    <% if(count>0) { %>
+                                    <tr>
+                                            
+                                            <td><a href="/admin/InfoCamp/<%=donates[i]._id%>"><%=donates[i]._id%></a></td>
+                                        </tr>
+                                    <% } %>
+                                    <% } %>
+                                    <% } else { %>
+                                    <div>Nunca fez uma doaçao</div>
+                                    <% } %>
+                                    <tr>
+                                    <td>Total gasto: <%= totalGasto %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -51,7 +83,7 @@
             <form action="/admin/delete/<%= user._id%>" method="post">
                 <button type="submit" class="btn btn-danger">DELETE</button>
             </form>
-        </br>
+            </br>
             <a href="/admin/listUsers" class="inicialPage">Pagina Anterior</a>
         </div>
     </div>
