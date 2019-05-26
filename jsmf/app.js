@@ -5,15 +5,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-const flash=require('connect-flash');
+const flash = require('connect-flash');
 
 const uuid = require('uuid/v4');
-const session=require('express-session');
+const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 var app = express();
 require('./config/config')(passport);
-
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('../DonationAPI/swagger.json');
 
 
 var mongoose = require('mongoose');
@@ -44,9 +45,9 @@ app.use(flash());
 
 app.use(session({
   genid: (req) => {
-      console.log('Inside session middleware genid function')
-      console.log(`Request object sessionID from client: ${req.sessionID}`)
-      return uuid() // use UUIDs for session IDs
+    console.log('Inside session middleware genid function')
+    console.log(`Request object sessionID from client: ${req.sessionID}`)
+    return uuid() // use UUIDs for session IDs
   },
   store: new FileStore(),
   secret: 'keyboard cat',
@@ -66,14 +67,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 app.use('/api-docs-Camp', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/', userRouter);
 app.use("/admin", adminRouter);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

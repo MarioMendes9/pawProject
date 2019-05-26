@@ -6,7 +6,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>Users List</title>
   <link rel='stylesheet' href='/stylesheets/registerStyle.css' />
-  <link rel="icon" href="#"/>
+  <link rel="icon" href="#" />
 </head>
 
 <body>
@@ -25,7 +25,6 @@
             <th scope="col">Nome Completo</th>
             <th scope="col">NIF</th>
             <th scope="col">Tipo</th>
-            <th scope="col">Total Gastos</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +45,7 @@
       <% } else { %>
       <div>No users found.</div>
       <% } %>
+      <h3><a href="/admin/ManageUser" class="inicialPage">Pagina anterior</a></h3>
     </div>
   </div>
 </body>
