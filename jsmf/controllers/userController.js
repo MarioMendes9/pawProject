@@ -54,11 +54,11 @@ userController.sendHome = function (req, res, next) {
             if (err) {
                 console.log(err);
             } else {
-               
-                for(var i=0;i<loca.length;i++){
-                    loca[i]=JSON.parse(loca[i]);
+
+                for (var i = 0; i < loca.length; i++) {
+                    loca[i] = JSON.parse(loca[i]);
                 }
-               
+
                 res.render("../views/home", { user: logUser, campanha: JSON.parse(campanhas), loca: loca });
             }
         });
@@ -110,6 +110,13 @@ userController.register = function (req, res) {
         });
     }
 
+
+};
+
+userController.contactPage = function (req, res) {
+    var logUser = req.user;
+
+    res.render("../views/All/contactos.ejs", { user: logUser });
 
 };
 

@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var userOptions = require("../controllers/UserOptControllers");
 var campOptions = require("../controllers/CampanhaOptController");
-var { adminAuthenticated,ensureAuthenticated } = require('../controllers/auth');
+var { adminAuthenticated, ensureAuthenticated } = require('../controllers/auth');
 
 
 //Admin board page 
-router.get('/',adminAuthenticated, function (req, res) {
+router.get('/', adminAuthenticated, function (req, res) {
     res.render("../views/AdminUsers/adminOpt");
 });
 
@@ -22,9 +22,9 @@ router.post('/save', adminAuthenticated, userOptions.save);
 
 //Edit utilizador
 
-router.post('/edit/:id',ensureAuthenticated , userOptions.edit);
+router.post('/edit/:id', ensureAuthenticated, userOptions.edit);
 
-router.get('/edit/:id',ensureAuthenticated , userOptions.showEditUser);
+router.get('/edit/:id', ensureAuthenticated, userOptions.showEditUser);
 
 //Delete utilizador
 
@@ -63,7 +63,7 @@ router.get('/deleteDonation/:id', adminAuthenticated, campOptions.deleteDonation
 
 router.get("/editDonations/:id", adminAuthenticated, campOptions.sendEditDonation);
 
-router.post('/CampDonate',campOptions.addDonation);
+router.post('/CampDonate', campOptions.addDonation);
 
 router.post('/UpdateDonate', adminAuthenticated, campOptions.updateStateDonation);
 
