@@ -6,7 +6,7 @@
         "description": "REST API for campaigns"
     },
     "host": "localhost:3000",
-    "basePath": "/api/v1",
+    "basePath": "/admin",
     "tags": [
         {
             "name": "Campaigns",
@@ -28,14 +28,15 @@
                 "tags": [
                     "Campaigns"
                 ],
+                "summary": "Criar uma campanha",
                 "description": "Criar uma campanha",
                 "parameters": [
                     {
                         "name": "Campaigns",
                         "in": "body",
-                        "description": "Camapanhã que quer criar",
+                        "description": "Campanhã que quer criar",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/creatCampanha"
                         }
                     }
                 ],
@@ -46,7 +47,7 @@
                     "200": {
                         "description": "Uma campanhã é criado",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/creatCampanha"
                         }
                     }
                 }
@@ -194,6 +195,36 @@
         }
     },
     "definitions": {
+        "creatCampanha": {
+            "required": [
+                "description",
+                "targetValue",
+                "logoName",
+                "IBAN",
+                "responsaveis"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "targetValue": {
+                    "type": "number"
+                },
+                "logoName": {
+                    "type": "string"
+                },
+                "IBAN": {
+                    "type": "string",
+                    "unique": true
+                },
+                "responsaveis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "Campanhas": {
             "required": [
                 "_id",
@@ -278,7 +309,10 @@
                     "unique": true
                 },
                 "responsaveis": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
