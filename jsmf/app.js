@@ -67,7 +67,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+
 app.use('/api-docs-Camp', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.use('/', userRouter);
 app.use("/admin", adminRouter);

@@ -11,10 +11,6 @@ var campanhaRouter = require('./routes/campanhas');
 
 var app = express();
 
-app.use(function (req, res, next) {
-  req.headers['if-none-match'] = 'no-match-for-this';
-  next();
-});
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
