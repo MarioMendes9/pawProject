@@ -29,10 +29,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/home">Campanhas</a>
@@ -45,20 +41,18 @@
         </div>
     </nav>
 
-
     <br>
 
-    <div class="col-md-5 ml-auto">
+    <div class="col-lg-4 ml-auto">
         Bem vindo <input type="hidden" name="username"
             value="<%= user.username %>"><strong><%= user.username %>!</strong> &nbsp;
-        <button type="submit" class="btn btn-secondary"><img src="../images/logo/def.png" alt="def"
-                style="width:20px;height:20px;">
-            Definição</button>
+        <form action="admin/edit/<%= user._id%>" method="GET"><button type="submit" class="btn btn-secondary"><img
+                    src="../images/logo/def.png" alt="def" style="width:20px;height:20px;"> Definição</button>
+        </form>
         <% if(user.tipoU=='Admin') { %>
         <form action="/admin" method="GET">
-            <button type="submit" class="btn btn-secondary"><img src="../images/logo/def.png" alt="Admin Painel"
-                    style="width:20px;height:20px;">
-                Admin Panel</button>
+            <button type="submit" class="btn btn-secondary"><img src="../images/logo/pa.png" alt="Admin Painel"
+                    style="width:20px;height:20px;"> Admin Panel</button>
         </form>
         <% } %>
         <form action="/logout" method="GET">
@@ -78,6 +72,18 @@
 
         <% if(campanha[i].estado == true) { %>
         <% count++ %>
+
+        <% var totalDonation = 0 %>
+        <% for(var j = 0;j<campanha[i].donations.length;j++) { %>
+
+        <% if(campanha[i].donations[j].estado == true) {%>
+
+        <% totalDonation = campanha[i].donations[j].montante %>
+
+        <% } %>
+
+        <% } %>
+
         <form action="/admin/CampDonate" method="POST">
             <div class="card">
                 <div class="card-body">
@@ -90,27 +96,23 @@
                         <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
                             </br>
                             <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
-                            <strong>Valor ja engariado: </strong>
+                            <strong>Valor ja engariado: </strong><%= totalDonation %></br>
                         </p>
 
                     </div>
 
+                    <div class="col-end">
 
-                    <div class="justify-content-md-center">
+                        <input type="number" class="form-control" name="montante" id="montante"
+                            placeholder="Montante que deseja doar">
+                    </div>
 
-
-                        <div class="col-end">
-
-                            <input type="number" class="form-control" name="montante" id="montante"
-                                placeholder="Montante que deseja doar">
-                        </div>
-
-                        <div class="col-12">
-                            <br>
-                            <button type="submit" class="btn btn-primary">Doar</button>
-                        </div>
+                    <div class="col-12">
                         <br>
-
+                        <button type="submit" class="btn btn-primary">Doar</button>
+                    </div>
+                    <br>
+                </div>
         </form>
 
     </div>
@@ -144,17 +146,17 @@
 
         if ("<%= loca.length>0 %>") {
             "<% for (var loca of loca) { %>"
-                var lat="<%= loca.lat %>";
-                var lon="<%= loca.lon %>";
-                var marker1 = L.marker([lat,lon]);
-                marker1.addTo(mymap);
+            var lat = "<%= loca.lat %>";
+            var lon = "<%= loca.lon %>";
+            var marker1 = L.marker([lat, lon]);
+            marker1.addTo(mymap);
             "<% } %>"
-        }else{
+        } else {
             alert("aqui");
-            var lat="<%= loca.lat %>";
-                var lon="<%= loca.lon %>";
-                var marker1 = L.marker([lat,lon]);
-                marker1.addTo(mymap);
+            var lat = "<%= loca.lat %>";
+            var lon = "<%= loca.lon %>";
+            var marker1 = L.marker([lat, lon]);
+            marker1.addTo(mymap);
         }
     </script>
 </body>
