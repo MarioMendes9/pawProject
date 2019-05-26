@@ -46,7 +46,7 @@
     <div class="col-lg-4 ml-auto">
         Bem vindo <input type="hidden" name="username"
             value="<%= user.username %>"><strong><%= user.username %>!</strong> &nbsp;
-        <form action="admin/edit/<%= user._id%>" method="GET"><button type="submit" class="btn btn-secondary"><img
+        <form action="/admin/edit/<%= user._id%>" method="GET"><button type="submit" class="btn btn-secondary"><img
                     src="../images/logo/def.png" alt="def" style="width:20px;height:20px;"> Definição</button>
         </form>
         <% if(user.tipoU=='Admin') { %>

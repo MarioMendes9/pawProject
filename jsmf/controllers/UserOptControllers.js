@@ -6,9 +6,6 @@ var http = require('http');
 
 var userOptController = {};
 
-/* userOptController.opt = function (req, res) {
-    res.render("../views/AdminUsers/adminUsers");
-}; */
 
 userOptController.manage = function (req, res) {
     res.render("../views/AdminUsers/manageUsers");
@@ -48,6 +45,7 @@ userOptController.create = function (req, res) {
 
 
 userOptController.edit = function (req, res) {
+
     User.findByIdAndUpdate(req.params.id, {
         $set: {
             username: req.body.username, password: req.body.password,
@@ -55,11 +53,19 @@ userOptController.edit = function (req, res) {
         }
     }, { new: true }, function (err, user) {
         if (err) {
-            console.log("Emplooyee:" + user);
-            console.log(err);
-            res.render("../views/AdminUsers/editUser", { employee: req.body });
+            
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/home");
         }
-        res.redirect("/admin/showInfo/" + user.id);
+        if(user==null){
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/home");
+        }else{
+            req.flash('success_msg', 'Utilizador editado com sucesso');
+            res.redirect("/home");
+        }
+
+        
     });
 };
 
@@ -68,8 +74,17 @@ userOptController.showEditUser = function (req, res) {
         if (err) {
             next(err);
         }
+        if(user==null){
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/home");
+        }
         else {
-            res.render("../views/AdminUsers/editUser", { user: user });
+            if(req.user.tipoU=="Admin"){
+                res.render("../views/AdminUsers/editUser", { user: user,isAdmin: true });
+            }
+            else{
+                res.render("../views/AdminUsers/editUser", { user: user,isAdmin: false });
+            }
         }
     });
 };

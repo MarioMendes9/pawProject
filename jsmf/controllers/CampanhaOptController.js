@@ -26,7 +26,6 @@ campanhaOptController.getAll = function (req, res) {
             res.setEncoding('utf-8');
             res.on('data', function (d) {
                 campanhas += d;
-                console.log(campanhas);
                 resolve();
 
             });
@@ -291,7 +290,7 @@ campanhaOptController.sendEditCamp = function (req, res) {
 
 
     p1.then(function () {
-        console.log(campanha);
+        
         res.render("../views/AdminDonation/editCampanhas", { campanha: JSON.parse(campanha) });
     });
 
@@ -313,7 +312,7 @@ campanhaOptController.editCamp = function (req, res) {
                 console.log("done file saved");
             });
 
-            console.log(fields);
+            
             upCamp = {
                 estado: fields.estado[0],
                 description: fields.description[0],
@@ -369,7 +368,7 @@ campanhaOptController.editCamp = function (req, res) {
                 console.log(error);
                 reject();
             });
-            console.log(details);
+         
 
             newReq.write(details);
             newReq.end();
@@ -410,14 +409,14 @@ campanhaOptController.updateStateDonation = function (req, res) {
 
         res.on('data', (d) => {
             campanha += d;
-            console.log(campanha);
+            
         });
     });
 
     newReq.on('error', (error) => {
         console.log(error);
     });
-    console.log(details);
+    
     newReq.write(details);
     newReq.end();
     res.redirect("/admin/InfoCamp/" + campID);
@@ -450,7 +449,7 @@ campanhaOptController.sendEditDonation = function (req, res) {
 
 
     p1.then(function () {
-        console.log(campanha);
+        
         res.render("../views/AdminDonation/listDonations", { campanha: JSON.parse(campanha) });
     });
 
@@ -466,7 +465,7 @@ campanhaOptController.deleteDonation = function (req, res) {
         path: '/api/v1/deleteDonation/' + req.params.id,
         method: 'DELETE',
     };
-    console.log(options);
+    
 
     var p1 = new Promise(function (resolve, reject) {
         var newReq = http.request(options, (res) => {

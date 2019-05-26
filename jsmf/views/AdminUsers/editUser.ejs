@@ -39,10 +39,11 @@
                             <td>NIF</td>
                             <td><input type="number" name="NIF" value="<%= user.NIF %>" /></td>
                         </tr>
+                        <% if(isAdmin == true){ %>
                         <tr>
                             <td>Tipo Utilizador</td>
                             <td>
-                                <select name="estado" id="tipoU">
+                                <select name="tipoU" id="tipoU">
                                     <% if(user.tipoU == "Admin"){ %>
                                     <option value="Admin">Admin</option>
                                     <option value="User">User</option>
@@ -52,6 +53,10 @@
                                     <% } %>
                             </td>
                         </tr>
+                        <% } else {%>
+                            <input type="hidden" name="tipoU" value="<%= user.tipoU %>">
+                        <% } %>
+
                     </tbody>
                 </table>
                 <button type="submit" class="btn btn-primary">Update</button>
