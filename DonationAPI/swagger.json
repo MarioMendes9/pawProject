@@ -1,0 +1,344 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Donation API",
+        "description": "REST API for campaigns"
+    },
+    "host": "localhost:3000",
+    "basePath": "/admin",
+    "tags": [
+        {
+            "name": "Campaigns",
+            "description": "API for campaigns in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/newCampanha": {
+            "post": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "Criar uma campanha",
+                "description": "Criar uma campanha",
+                "parameters": [
+                    {
+                        "name": "Campaigns",
+                        "in": "body",
+                        "description": "Campanhã que quer criar",
+                        "schema": {
+                            "$ref": "#/definitions/creatCampanha"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Uma campanhã é criado",
+                        "schema": {
+                            "$ref": "#/definitions/creatCampanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/getCampanhas": {
+            "get": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "Mostrar todas as campanhas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/addDonation": {
+            "post": {
+                "tags": [
+                    "Donations"
+                ],
+                "description": "Update numa doaçao na campanha",
+                "parameters": [
+                    {
+                        "name": "Campaigns",
+                        "in": "body",
+                        "description": "Doaçao que quer atualizar na campanha",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A doação é atualizada",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/updateStateDonation": {
+            "post": {
+                "tags": [
+                    "Donations"
+                ],
+                "description": "Update o estado de uma doaçao",
+                "parameters": [
+                    {
+                        "name": "Campaigns",
+                        "in": "body",
+                        "description": "Atualizar o estado da doação",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "O estado da doação é atualizada",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/deleteCampanha/{campanhaId}": {
+            "delete": {
+                "summary": "Apaga uma campanha",
+                "tags": [
+                    "Campaigns"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Campanha foi apagada",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/getCampanha/{campanhaId}": {
+            "get": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "summary": "Procura uma campanha",
+                "responses": {
+                    "200": {
+                        "description": "Pedir uma campanha ",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        },
+        "/updateCampanha/{campanhaId}": {
+            "post": {
+                "tags": [
+                    "Campaigns"
+                ],
+                "description": "Actualizar uma Campanha",
+                "parameters": [
+                    {
+                        "name": "Campaigns",
+                        "in": "body",
+                        "description": "Actualizar uma Campanha",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                ]
+            }
+        },
+        "/deleteDonation/{campanhaId}": {
+            "delete": {
+                "summary": "Apaga uma doação",
+                "tags": [
+                    "Donations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A doação foi apagada",
+                        "schema": {
+                            "$ref": "#/definitions/Campanha"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "creatCampanha": {
+            "required": [
+                "description",
+                "targetValue",
+                "logoName",
+                "IBAN",
+                "responsaveis"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "targetValue": {
+                    "type": "number"
+                },
+                "logoName": {
+                    "type": "string"
+                },
+                "IBAN": {
+                    "type": "string",
+                    "unique": true
+                },
+                "responsaveis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Campanhas": {
+            "required": [
+                "_id",
+                "estado",
+                "description",
+                "targetValue",
+                "logoName",
+                "IBAN",
+                "responsaveis",
+                "donations"
+            ],
+            "properties": {
+                "estado": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "targetValue": {
+                    "type": "number"
+                },
+                "logoName": {
+                    "type": "string"
+                },
+                "IBAN": {
+                    "type": "string",
+                    "unique": true
+                },
+                "responsaveis": [
+                    {
+                        "type": "string"
+                    }
+                ],
+                "donations": [
+                    {
+                        "user": {
+                            "type": "string"
+                        },
+                        "montante": {
+                            "type": "number"
+                        },
+                        "estado": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ]
+            }
+        },
+        "Campanha": {
+            "required": [
+                "_id",
+                "estado",
+                "description",
+                "targetValue",
+                "logoName",
+                "IBAN",
+                "responsaveis",
+                " donations"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "estado": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "targetValue": {
+                    "type": "number"
+                },
+                "logoName": {
+                    "type": "string"
+                },
+                "IBAN": {
+                    "type": "string",
+                    "unique": true
+                },
+                "responsaveis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Donations": {
+            "required": [
+                "_id",
+                "estado",
+                "description",
+                "targetValue",
+                "logoName",
+                "IBAN",
+                "responsaveis",
+                " donations"
+            ],
+            "properties": {
+                "user": {
+                    "type": "string"
+                },
+                "montante": {
+                    "type": "number"
+                },
+                "estado": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        }
+    }
+}

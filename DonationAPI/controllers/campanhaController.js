@@ -90,7 +90,7 @@ campanhaController.addDonation = function (req, res, next) {
 
 campanhaController.updateStateDonation = function (req, res, next) {
     Campanha.findOneAndUpdate({ "donations._id": req.body.donateId },
-        { $set: { 'donations.$.estado': req.body.estado,'donations.$.montante':req.body.montante } }, { new: true }, function (err, donation) {
+        { $set: { 'donations.$.estado': req.body.estado, 'donations.$.montante': req.body.montante } }, { new: true }, function (err, donation) {
             if (err) {
                 next(err);
             }
@@ -108,7 +108,7 @@ campanhaController.updateCampanha = function (req, res) {
             estado: req.body.estado, description: req.body.description,
             targetValue: req.body.targetValue, logoName: req.body.logoName, IBAN: req.body.IBAN, responsaveis: req.body.responsaveis
         }
-    },{new: true}, function (err, camp) {
+    }, { new: true }, function (err, camp) {
         if (err) {
             res.json(err);
         }
@@ -118,7 +118,9 @@ campanhaController.updateCampanha = function (req, res) {
 
 
 campanhaController.deleteDonation = function (req, res) {
+
     Campanha.update( {}, { $pull: {donations: {_id:req.params.id}}},{ safe: true, multi:true }, function (err, result) {
+
         if (err) {
             console.log(err);
         }
