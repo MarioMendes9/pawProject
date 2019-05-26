@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userOptions = require("../controllers/UserOptControllers");
 var campOptions = require("../controllers/CampanhaOptController");
-var { adminAuthenticated } = require('../controllers/auth');
+var { adminAuthenticated,ensureAuthenticated } = require('../controllers/auth');
 
 
 //Admin board page 
@@ -22,9 +22,9 @@ router.post('/save', adminAuthenticated, userOptions.save);
 
 //Edit utilizador
 
-router.post('/edit/:id', adminAuthenticated, userOptions.edit);
+router.post('/edit/:id',ensureAuthenticated , userOptions.edit);
 
-router.get('/edit/:id', adminAuthenticated, userOptions.showEditUser);
+router.get('/edit/:id',ensureAuthenticated , userOptions.showEditUser);
 
 //Delete utilizador
 
