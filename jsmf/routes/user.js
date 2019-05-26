@@ -4,19 +4,15 @@ var path = require('path');
 var userOptions = require("../controllers/userController");
 const { ensureAuthenticated } = require('../controllers/auth');
 
-
-
-
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
   if (req.isAuthenticated()) {
     res.redirect('/home');
   }
-  else{
-    res.sendFile(path.join(__dirname, '../public/html', 'firstPage.html'));
+  else {
+    res.sendFile(path.join(__dirname, '../public/html', 'inicialPage.html'));
   }
-  
+
 });
 
 //normal board page 
@@ -46,4 +42,7 @@ router.get('/login', function (req, res) {
 router.post('/login', userOptions.userLogin);
 
 router.get('/logout', userOptions.userLogout);
+
+router.get('/contact', ensureAuthenticated, userOptions.contactPage);
+
 module.exports = router;
