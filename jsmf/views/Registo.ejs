@@ -15,36 +15,47 @@
 
     <div class="container">
         <div class="justify-content-md-center">
-            
-                <a href="/" class="inicialPage">Pagina Inicial</a>
 
-                <h1>Criação De Conta</h1><br>
-                <% include ./messages %>
-                <form action="/register" method="POST">
+            <a href="/" class="inicialPage">Pagina Inicial</a>
+
+            <h1>Criação De Conta</h1><br>
+            <% include ./messages %>
+            <form action="/register" method="POST">
                 <label for="username">Username :</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username...." value="<%= typeof user != 'undefined' ? user.username : '' %>" required/>
+                <input type="text" class="form-control" name="username" id="username"
+                    placeholder="Escolha um nome de utilizador"
+                    value="<%= typeof user != 'undefined' ? user.username : '' %>" required />
 
                 </br>
-                <!-- <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email :</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email...">
-                    </div> -->
-
 
                 <label for="password">Password :</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password..." value="<%= typeof user != 'undefined' ? user.password : '' %>" required />
+                <input type="password" class="form-control" name="password" id="password"
+                    placeholder="Digite a sua password" value="<%= typeof user != 'undefined' ? user.password : '' %>"
+                    required />
 
                 </br>
+                <div id="divloca">
+                    <label for="loca">Location</label>
+                    
+               
+                <p><small>Click here</small></p>
+                <input id="loca" type="text" class="form-control" name="localizacao" placeholder="Deve aceitar conhecer a sua localizacao para o preenchimento ser automatico!"
+                    value="<%= typeof user != 'undefined' ? user.localizacao : '' %>" readonly="readonly" required>
+                </div>
+                </br>
                 <label for="IBAN">IBAN :</label>
-                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="(DEFINIR)" value="<%= typeof user!= 'undefined' ? user.IBAN : '' %>" required/>
+                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="Insira o seu IBAN"
+                    value="<%= typeof user!= 'undefined' ? user.IBAN : '' %>" required />
 
                 </br>
                 <label for="nomeCompleto">Nome completo :</label>
-                <input type="string" class="form-control" name="nomeCompleto" id="nome" placeholder="Nome..." value="<%= typeof user != 'undefined' ? user.nomeCompleto : '' %>" required/>
+                <input type="string" class="form-control" name="nomeCompleto" id="nome" placeholder="Insira o seu nome "
+                    value="<%= typeof user != 'undefined' ? user.nomeCompleto : '' %>" required />
 
                 </br>
                 <label for="NIF">NIF :</label>
-                <input type="number" class="form-control" name="NIF" id="nif" value="<%= typeof user != 'undefined' ? user.NIF : '' %>" required/>
+                <input type="number" class="form-control" name="NIF" id="nif" placeholder="Insira o seu NIF 9 digitos"
+                    value="<%= typeof user != 'undefined' ? user.NIF : '' %>" required />
 
                 </br>
                 <button type="submit" class="btn btn-primary">Registar</button>
@@ -52,6 +63,10 @@
             <p>Have An Account? <a href="/login">Login</a></p>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/javascripts/location.js"></script>
 
 </body>
 

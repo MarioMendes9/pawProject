@@ -5,7 +5,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const flash=require('connect-flash');
+
+const uuid = require('uuid/v4');
 const session=require('express-session');
+const FileStore = require('session-file-store')(session);
+const passport = require('passport');
+var app = express();
+require('./config/config')(passport);
 
 
 var mongoose = require('mongoose');
@@ -19,11 +25,11 @@ var adminRouter=require('./routes/admin');
 var userRouter=require('./routes/user');
 
 
-var app = express();
-app.use(function(req, res, next) {
+
+/*app.use(function(req, res, next) {
   req.headers['if-none-match'] = 'no-match-for-this';
   next();    
-});
+});*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,13 +41,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
-
 app.use(flash());
+
+
+app.use(session({
+  genid: (req) => {
+      console.log('Inside session middleware genid function')
+      console.log(`Request object sessionID from client: ${req.sessionID}`)
+      return uuid() // use UUIDs for session IDs
+  },
+  store: new FileStore(),
+  secret: 'keyboard cat',
+  resave: false, saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 //Mensagens
 
@@ -52,9 +68,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+//Routes
 app.use('/',userRouter);
 app.use("/admin",adminRouter);
+
 
 
 // catch 404 and forward to error handler
