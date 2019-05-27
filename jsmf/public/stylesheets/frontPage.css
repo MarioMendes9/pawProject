@@ -83,3 +83,11 @@ button {
   width: 100%;
   margin: 5px;
 }
+
+img.startPage {
+  margin: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

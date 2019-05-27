@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0",
         "title": "Donation API",
-        "description": "REST API for campaigns"
+        "description": "REST API for campaigns and donations"
     },
     "host": "localhost:3000",
     "basePath": "/admin",
@@ -36,7 +36,7 @@
                         "in": "body",
                         "description": "Campanhã que quer criar",
                         "schema": {
-                            "$ref": "#/definitions/creatCampanha"
+                            "$ref": "#/definitions/Campanha"
                         }
                     }
                 ],
@@ -47,7 +47,7 @@
                     "200": {
                         "description": "Uma campanhã é criado",
                         "schema": {
-                            "$ref": "#/definitions/creatCampanha"
+                            "$ref": "#/definitions/Campanha"
                         }
                     }
                 }
@@ -81,7 +81,7 @@
                         "in": "body",
                         "description": "Doaçao que quer atualizar na campanha",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/Donations"
                         }
                     }
                 ],
@@ -92,7 +92,7 @@
                     "200": {
                         "description": "A doação é atualizada",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/Donations"
                         }
                     }
                 }
@@ -110,7 +110,7 @@
                         "in": "body",
                         "description": "Atualizar o estado da doação",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/Donations"
                         }
                     }
                 ],
@@ -121,7 +121,7 @@
                     "200": {
                         "description": "O estado da doação é atualizada",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/Donations"
                         }
                     }
                 }
@@ -144,6 +144,15 @@
             }
         },
         "/getCampanha/{campanhaId}": {
+            "parameters": [
+                {
+                    "name": "campanhaId",
+                    "in": "path",
+                    "required": true,
+                    "description": "Id da campanha",
+                    "type": "string"
+                }
+            ],
             "get": {
                 "tags": [
                     "Campaigns"
@@ -151,7 +160,7 @@
                 "summary": "Procura uma campanha",
                 "responses": {
                     "200": {
-                        "description": "Pedir uma campanha ",
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/Campanha"
                         }
@@ -160,6 +169,15 @@
             }
         },
         "/updateCampanha/{campanhaId}": {
+            "parameters": [
+                {
+                    "name": "campanhaId",
+                    "in": "path",
+                    "required": true,
+                    "description": "Id da campanha",
+                    "type": "string"
+                }
+            ],
             "post": {
                 "tags": [
                     "Campaigns"
@@ -178,6 +196,15 @@
             }
         },
         "/deleteDonation/{campanhaId}": {
+            "parameters": [
+                {
+                    "name": "campanhaId",
+                    "in": "path",
+                    "required": true,
+                    "description": "Id da campanha",
+                    "type": "string"
+                }
+            ],
             "delete": {
                 "summary": "Apaga uma doação",
                 "tags": [
@@ -187,7 +214,7 @@
                     "200": {
                         "description": "A doação foi apagada",
                         "schema": {
-                            "$ref": "#/definitions/Campanha"
+                            "$ref": "#/definitions/Donations"
                         }
                     }
                 }
@@ -195,46 +222,14 @@
         }
     },
     "definitions": {
-        "creatCampanha": {
+        "Campanha": {
             "required": [
-                "description",
-                "targetValue",
-                "logoName",
-                "IBAN",
-                "responsaveis"
-            ],
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "targetValue": {
-                    "type": "number"
-                },
-                "logoName": {
-                    "type": "string"
-                },
-                "IBAN": {
-                    "type": "string",
-                    "unique": true
-                },
-                "responsaveis": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "Campanhas": {
-            "required": [
-                "_id",
                 "estado",
                 "description",
                 "targetValue",
                 "logoName",
                 "IBAN",
-                "responsaveis",
-                "donations"
+                "responsaveis"
             ],
             "properties": {
                 "estado": {
@@ -254,13 +249,40 @@
                     "type": "string",
                     "unique": true
                 },
-                "responsaveis": [
-                    {
+                "responsaveis": {
+                    "type": "array",
+                    "items": {
                         "type": "string"
                     }
-                ],
-                "donations": [
-                    {
+                },
+                "donations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "user": {
+                                "type": "string"
+                            },
+                            "montante": {
+                                "type": "number"
+                            },
+                            "estado": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Donations": {
+            "required": [
+                "donations"
+            ],
+            "properties": {
+                "donations": {
+                    "type": "object",
+                    "properties": {
                         "user": {
                             "type": "string"
                         },
@@ -272,71 +294,6 @@
                             "default": false
                         }
                     }
-                ]
-            }
-        },
-        "Campanha": {
-            "required": [
-                "_id",
-                "estado",
-                "description",
-                "targetValue",
-                "logoName",
-                "IBAN",
-                "responsaveis",
-                " donations"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "uniqueItems": true
-                },
-                "estado": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "description": {
-                    "type": "string"
-                },
-                "targetValue": {
-                    "type": "number"
-                },
-                "logoName": {
-                    "type": "string"
-                },
-                "IBAN": {
-                    "type": "string",
-                    "unique": true
-                },
-                "responsaveis": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "Donations": {
-            "required": [
-                "_id",
-                "estado",
-                "description",
-                "targetValue",
-                "logoName",
-                "IBAN",
-                "responsaveis",
-                " donations"
-            ],
-            "properties": {
-                "user": {
-                    "type": "string"
-                },
-                "montante": {
-                    "type": "number"
-                },
-                "estado": {
-                    "type": "boolean",
-                    "default": false
                 }
             }
         }
