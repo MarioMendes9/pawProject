@@ -4,7 +4,7 @@ var http = require('http');
 var fs = require('fs');
 var multiparty = require('multiparty');
 var campanhaOptController = {};
-
+var User = require("../models/User");
 
 campanhaOptController.manage = function (req, res) {
     res.render("../views/AdminDonation/manageCamp");
@@ -37,7 +37,25 @@ campanhaOptController.getAll = function (req, res) {
 
     });
     p1.then(function () {
-        res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas) });
+
+        User.find({}).distinct('localizacao').exec(function (err, loca) {
+            if (err) {
+                console.log(err);
+            } else {
+
+                for (var i = 0; i < loca.length; i++) {
+                    loca[i] = JSON.parse(loca[i]);
+                }
+
+                res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas),loca:loca });
+
+            }
+        });
+
+
+
+
+       // res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas) });
 
     });
 

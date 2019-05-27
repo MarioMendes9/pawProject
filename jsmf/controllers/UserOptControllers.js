@@ -139,9 +139,43 @@ userOptController.findByUsername = function (req, res) {
         if (err) {
             next(err);
         }
+        if (user == null) {
+            req.flash('error_msg', 'Utilizador nao existe');
+            console.log("Enviou a mensagem");
+            res.redirect("/admin/ManageUser");
+        }
         else {
-            console.log(user);
-            res.render("../views/AdminUsers/showUser", { user: user });
+            var donates;
+            var options = {
+                hostname: 'localhost',
+                port: 8080,
+                path: '/api/v1/userDonations/' + user.username,
+            }
+
+            var p1 = new Promise(function (resolve, reject) {
+                var newReq = http.get(options, function (res) {
+                    console.log(`statusCode:${res.statusCode}`);
+                    res.setEncoding('utf-8');
+                    res.on('data', function (d) {
+                        donates = d;
+                        resolve();
+                    });
+                });
+
+                newReq.on('error', (error) => {
+                    req.flash('error_msg', 'Utilizador nao existe');
+                    res.redirect("/admin/ManageUser");
+                });
+            });
+
+
+            p1.then(function () {
+
+
+                res.render("../views/AdminUsers/showUser", { user: user, donates: JSON.parse(donates) });
+
+            });
+
         }
     });
 }
