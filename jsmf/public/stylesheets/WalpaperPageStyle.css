@@ -34,3 +34,7 @@ input, textarea {
   width: 100%;
 }
 
+#mapid {
+  height: 380px;
+}
+
