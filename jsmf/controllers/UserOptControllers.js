@@ -194,6 +194,6 @@ userOptController.findByUsername = function (req, res) {
 
         }
     });
-}
+};
 
 module.exports = userOptController;

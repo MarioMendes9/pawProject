@@ -107,4 +107,38 @@ userController.contactPage = function (req, res) {
 
 };
 
+
+
+userController.firstPage = function (req, res) {
+    var campanhas="";
+    var options = {
+        hostname: 'localhost',
+        port: 8080,
+        path: '/api/v1/getCampanhas'
+    };
+   
+
+    var p1 = new Promise(function (resolve, reject) {
+        var newReq = http.get(options, function (res) {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
+            res.on('data', function (d) {
+                campanhas+= d;
+                resolve();
+
+            });
+        });
+
+        newReq.on('error', (error) => {
+            reject();
+        });
+    });
+    
+    p1.then(function () {
+       
+        res.render("../views/inicialPage", { campanha: JSON.parse(campanhas) });
+    });
+};
+
+
 module.exports = userController;
