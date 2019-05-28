@@ -23,13 +23,12 @@ campanhaController.createCampanha = function (req, res, next) {
  * Apagar uma camapanha
  */
 
-campanhaController.deleteCampanha = function (req, res) {
+campanhaController.deleteCampanha = function (req, res,next) {
     Campanha.deleteOne({ _id: req.params.id }, function (err, result) {
         if (err) {
-            console.log(err);
+            next(err);
         }
         else {
-            console.log(result);
             res.json(result);
         }
     });
@@ -122,7 +121,7 @@ campanhaController.deleteDonation = function (req, res) {
     Campanha.update( {}, { $pull: {donations: {_id:req.params.id}}},{ safe: true, multi:true }, function (err, result) {
 
         if (err) {
-            console.log(err);
+            res.json(err);
         }
         else {
             res.json(result);
@@ -138,7 +137,6 @@ campanhaController.getDonationsOneUser=function(req,res,next){
         if(err){
             next(err);
         }
-        console.log(result);
         res.json(result);
     });
 };

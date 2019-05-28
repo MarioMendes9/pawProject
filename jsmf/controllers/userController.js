@@ -50,20 +50,6 @@ userController.sendHome = function (req, res, next) {
     });
 
     p1.then(function () {
-        /* User.find({}).distinct('localizacao').exec(function (err, loca) {
-             if (err) {
-                 console.log(err);
-             } else {
- 
-                 for (var i = 0; i < loca.length; i++) {
-                     loca[i] = JSON.parse(loca[i]);
-                 }
- 
-                 res.render("../views/home", { user: logUser, campanha: JSON.parse(campanhas), loca: loca });
-             }
-         });
- 
- */
         res.render("../views/home", { user: logUser, campanha: JSON.parse(campanhas) });
 
 

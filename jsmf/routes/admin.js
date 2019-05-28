@@ -38,9 +38,6 @@ router.get('/showInfo/:id', adminAuthenticated, userOptions.allInfo);
 router.get('/showByUsername/:username', adminAuthenticated, userOptions.findByUsername);
 
 
-/*****************************************************************************
- * ALMOST DONE A PARTE EM CIMA
- ****************************************************************************/
 /**
  * Comunicar com a api
  */
