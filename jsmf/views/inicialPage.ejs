@@ -29,6 +29,53 @@
             </div>
 
         </div>
+
+
+        <h2>Lista das campanhas que temos disponiveis</h2>
+
+        <% if(campanha.length>0) { %>
+        <% var count = 0 %>
+        <% for(var i=0;i<campanha.length;i++) { %>
+
+        <% if(campanha[i].estado == true) { %>
+        <% count++ %>
+
+        <% var totalDonation = 0 %>
+        <% for(var j = 0;j<campanha[i].donations.length;j++) { %>
+
+        <% if(campanha[i].donations[j].estado == true) {%>
+
+        <% totalDonation = campanha[i].donations[j].montante %>
+
+        <% } %>
+
+        <% } %>
+
+
+        <div class="card">
+            <div class="card-body">
+                <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                <div id="desc">
+                    </br>
+                    </br>
+                    <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
+
+                    </p>
+
+                </div>
+                <br>
+            </div>
+
+        </div>
+        <% } %>
+        <% } %>
+        <% if(count == 0) { %>
+        <div>Não Existem Campanhas.</div>
+        <% } %>
+        <% } else { %>
+        <div>Não Existem Campanhas.</div>
+        <% } %>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

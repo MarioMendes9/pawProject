@@ -5,13 +5,12 @@ var userOptions = require("../controllers/userController");
 const { ensureAuthenticated } = require('../controllers/auth');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
   if (req.isAuthenticated()) {
     res.redirect('/home');
   }
   else {
-    //    res.sendFile(path.join(__dirname, '../public/html', 'inicialPage.html'));
-    res.render('../views/inicialPage');
+    userOptions.firstPage(req,res);
   }
 
 });
