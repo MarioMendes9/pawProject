@@ -10,7 +10,8 @@ router.get('/', function (req, res, next) {
     res.redirect('/home');
   }
   else {
-    res.sendFile(path.join(__dirname, '../public/html', 'inicialPage.html'));
+    //    res.sendFile(path.join(__dirname, '../public/html', 'inicialPage.html'));
+    res.render('../views/inicialPage');
   }
 
 });
