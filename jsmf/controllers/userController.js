@@ -73,11 +73,11 @@ userController.register = function (req, res) {
     }
 
     if (user.password.length < 6) {
-        errors.push({ msg: "Password demasiado curta, pelo menos 6 caracteres!" });
+        errors.push({ msg: "Password demasiado curta, pelo menos 6 caracteres !" });
     }
 
     if (user.NIF <= 99999999 || user.NIF > 999999999) {
-        errors.push({ msg: "Insira um NIF valido por favor!" });
+        errors.push({ msg: "Insira um NIF valido por favor !" });
     }
 
     if (errors.length > 0) {
@@ -88,7 +88,7 @@ userController.register = function (req, res) {
         user.save(function (err, createUser) {
             if (err) {
                 console.log(err);
-                errors.push({ msg: 'Este utilizador ja existe!' });
+                errors.push({ msg: 'Este utilizador ja existe !' });
                 res.render('../views/Registo', { errors: errors, user: user });
             } else {
                 req.flash('success_msg', 'Registo efetuado com sucesso');
@@ -110,20 +110,20 @@ userController.contactPage = function (req, res) {
 
 
 userController.firstPage = function (req, res) {
-    var campanhas="";
+    var campanhas = "";
     var options = {
         hostname: 'localhost',
         port: 8080,
         path: '/api/v1/getCampanhas'
     };
-   
+
 
     var p1 = new Promise(function (resolve, reject) {
         var newReq = http.get(options, function (res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', function (d) {
-                campanhas+= d;
+                campanhas += d;
                 resolve();
 
             });
@@ -133,9 +133,9 @@ userController.firstPage = function (req, res) {
             reject();
         });
     });
-    
+
     p1.then(function () {
-       
+
         res.render("../views/inicialPage", { campanha: JSON.parse(campanhas) });
     });
 };
