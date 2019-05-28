@@ -22,29 +22,28 @@
 
                 <label for="username">Username :</label>
 
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username....">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username...."
+                    onkeyup="" pattern="[A-Za-z]{1,15}" required>
 
                 </br>
-                <!-- <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email :</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email...">
-                    </div> -->
-
-
                 <label for="password">Password :</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password...">
+                <input type="password" class="form-control" name="password" id="password" pattern=".{6,}"
+                    title="Password demasiado curta, pelo menos 6 caracteres !" placeholder="Password..." required>
 
                 </br>
                 <label for="IBAN">IBAN :</label>
-                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="(DEFINIR)">
+                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="Introduz o seu IBAN"
+                    required>
 
                 </br>
                 <label for="nomeCompleto">Nome completo :</label>
-                <input type="string" class="form-control" name="nomeCompleto" id="nome" placeholder="Nome...">
+                <input type="string" class="form-control" name="nomeCompleto" id="nome"
+                    placeholder="Introduz o seu Nome Completo..." pattern="[A-Za-z\s]{1,30}" required>
 
                 </br>
                 <label for="NIF">NIF :</label>
-                <input type="text" class="form-control" name="NIF" id="nif" placeholder="(DEFINIR)">
+                <input type="text" class="form-control" name="NIF" id="nif" placeholder="Introduz o seu NIF"
+                    pattern="[0-9]{8,9}" required>
 
                 </br>
                 <button type="submit" class="btn btn-primary">Criar utilizador</button>
