@@ -1,6 +1,6 @@
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
-    console.log("ensura:"+req.isAuthenticated());
+    
     if (req.isAuthenticated()) {
       return next();
     } else {
@@ -12,8 +12,6 @@ module.exports = {
   },
   adminAuthenticated: function (req, res, next) {
     if (req.isAuthenticated()) {
-      console.log("admin auten");
-      console.log(req.user.tipoU);
       if (req.user.tipoU == 'Admin') {
         next();
       } else {

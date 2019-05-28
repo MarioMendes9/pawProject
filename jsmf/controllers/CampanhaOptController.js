@@ -32,7 +32,8 @@ campanhaOptController.getAll = function (req, res) {
         });
 
         newReq.on('error', (error) => {
-            console.log(error);
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
         });
 
     });
@@ -40,23 +41,15 @@ campanhaOptController.getAll = function (req, res) {
 
         User.find({}).distinct('localizacao').exec(function (err, loca) {
             if (err) {
-                console.log(err);
+                req.flash('error_msg', 'Ocorreu um erro');
+                res.redirect("/admin");
             } else {
-
                 for (var i = 0; i < loca.length; i++) {
                     loca[i] = JSON.parse(loca[i]);
                 }
-
-                res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas),loca:loca });
-
+                res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas), loca: loca });
             }
         });
-
-
-
-
-       // res.render("../views/AdminDonation/listCampanha", { campanhas: JSON.parse(campanhas) });
-
     });
 
 };
@@ -65,7 +58,6 @@ campanhaOptController.getAll = function (req, res) {
 campanhaOptController.getCampById = function (req, res) {
 
     var campanha = "";
-    console.log(req.params.id);
 
     var options = {
         hostname: 'localhost',
@@ -84,14 +76,21 @@ campanhaOptController.getCampById = function (req, res) {
         });
 
         newReq.on('error', (error) => {
-            console.log(error);
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
         });
     });
 
 
     p1.then(function () {
 
-        res.render("../views/AdminDonation/showCampanha", { campanha: JSON.parse(campanha) });
+        if (JSON.parse(campanha) == null) {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+        } else {
+
+            res.render("../views/AdminDonation/showCampanha", { campanha: JSON.parse(campanha) });
+        }
     });
 };
 
@@ -101,7 +100,7 @@ campanhaOptController.delete = function (req, res) {
 
     var filen = req.body.logoName;
 
-
+    var campanha;
     var options = {
         hostname: 'localhost',
         port: 8080,
@@ -114,11 +113,9 @@ campanhaOptController.delete = function (req, res) {
             console.log(`statusCode:${res.statusCode}`);
             res.setEncoding('utf-8');
             res.on('data', (d) => {
-                var campanha = JSON.parse(d);
-                //Se conseguir apagar a campanha
+                campanha = JSON.parse(d);
                 if (campanha.n == 1) {
                     const filePath = path.join(__dirname, "../public/images/logoCamp/" + filen);
-                    console.log(filePath);
                     fs.unlinkSync(filePath);
                 }
                 resolve();
@@ -126,14 +123,25 @@ campanhaOptController.delete = function (req, res) {
         });
 
         newReq.on('error', (error) => {
-            console.log(error);
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
         });
         newReq.end();
 
     })
 
     p1.then(function () {
-        res.redirect("/admin/getCampanhas");
+        console.log("delete");
+        console.log(campanha);
+        if (campanha.deletedCount != 0) {
+            req.flash('success_msg', 'Campanha apagada com sucesso');
+            res.redirect("/admin");
+
+        }
+        else {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+        }
     });
 
 };
@@ -188,20 +196,22 @@ campanhaOptController.create = function (req, res) {
             }
         };
         // console.log(details);
-        var campanha = "";
+        var campanha;
         var p1 = new Promise(function (resolve, reject) {
             var newReq = http.request(options, (res) => {
                 console.log(`statusCode:${res.statusCode}`);
                 res.setEncoding('utf-8');
 
                 res.on('data', (d) => {
-                    campanha += d;
+                    campanha = d;
                     resolve();
                 });
             });
 
             newReq.on('error', (error) => {
-                console.log(error);
+                console.log("aqui");
+                req.flash('error_msg', 'Ocorreu um erro');
+                res.redirect("/admins");
             });
 
 
@@ -210,7 +220,9 @@ campanhaOptController.create = function (req, res) {
         });
 
         p1.then(function () {
-            res.redirect("/admin/ManageDonations");
+            req.flash('success_msg', 'Campanha criada com sucesso');
+            res.redirect("/admin");
+
         });
 
     });
@@ -302,14 +314,20 @@ campanhaOptController.sendEditCamp = function (req, res) {
         });
 
         newReq.on('error', (error) => {
-            console.log(error);
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
         });
     });
 
 
     p1.then(function () {
-        
-        res.render("../views/AdminDonation/editCampanhas", { campanha: JSON.parse(campanha) });
+        if (campanha == "null") {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+        } else {
+            res.render("../views/AdminDonation/editCampanhas", { campanha: JSON.parse(campanha) });
+        }
+
     });
 
 
@@ -330,7 +348,7 @@ campanhaOptController.editCamp = function (req, res) {
                 console.log("done file saved");
             });
 
-            
+
             upCamp = {
                 estado: fields.estado[0],
                 description: fields.description[0],
@@ -357,7 +375,7 @@ campanhaOptController.editCamp = function (req, res) {
 
             };
         }
-        console.log(upCamp);
+
         var details = JSON.stringify(upCamp);
         var options = {
             hostname: 'localhost',
@@ -386,58 +404,76 @@ campanhaOptController.editCamp = function (req, res) {
                 console.log(error);
                 reject();
             });
-         
+
 
             newReq.write(details);
             newReq.end();
         });
 
         p1.then(function () {
-            res.redirect("/admin/InfoCamp/" + req.params.id);
+            campanha = JSON.parse(campanha);
+            if (campanha == null) {
+                req.flash('error_msg', 'Ocorreu um erro');
+                res.redirect("/admin");
+
+            }
+            else {
+                res.redirect("/admin/InfoCamp/" + req.params.id);
+
+            }
         });
-
-
-
-
-
     });
 
 
 };
+/*********************************************************************** */
 
 campanhaOptController.updateStateDonation = function (req, res) {
-    var campanha = "";
+    var campanha;
     var campID = req.body.campId;
-    var details = JSON.stringify(req.body);
-    var options = {
-        hostname: 'localhost',
-        port: 8080,
-        path: '/api/v1/updateStateDonation',
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            'Content-Length': details.length
-        }
-    };
+    var p1 = new Promise(function (resolve, reject) {
+        var details = JSON.stringify(req.body);
+        var options = {
+            hostname: 'localhost',
+            port: 8080,
+            path: '/api/v1/updateStateDonation',
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'Content-Length': details.length
+            }
+        };
 
 
-    var newReq = http.request(options, (res) => {
-        console.log(`statusCode:${res.statusCode}`);
-        res.setEncoding('utf-8');
+        var newReq = http.request(options, (res) => {
+            console.log(`statusCode:${res.statusCode}`);
+            res.setEncoding('utf-8');
 
-        res.on('data', (d) => {
-            campanha += d;
-            
+            res.on('data', (d) => {
+                campanha = d;
+                resolve();
+
+            });
         });
+
+        newReq.on('error', (error) => {
+            reject();
+
+        });
+
+        newReq.write(details);
+        newReq.end();
     });
 
-    newReq.on('error', (error) => {
-        console.log(error);
+    p1.then(function () {
+        if (campanha == 'null') {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+
+        } else {
+            res.redirect("/admin/InfoCamp/" + campID);
+        }
     });
-    
-    newReq.write(details);
-    newReq.end();
-    res.redirect("/admin/InfoCamp/" + campID);
 };
 
 
@@ -467,8 +503,13 @@ campanhaOptController.sendEditDonation = function (req, res) {
 
 
     p1.then(function () {
-        
-        res.render("../views/AdminDonation/listDonations", { campanha: JSON.parse(campanha) });
+        if (campanha == 'null') {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+
+        } else {
+            res.render("../views/AdminDonation/listDonations", { campanha: JSON.parse(campanha) });
+        }
     });
 
 
@@ -476,14 +517,14 @@ campanhaOptController.sendEditDonation = function (req, res) {
 
 
 campanhaOptController.deleteDonation = function (req, res) {
-    var campanha = "";
+    var campanha;
     var options = {
         hostname: 'localhost',
         port: 8080,
         path: '/api/v1/deleteDonation/' + req.params.id,
         method: 'DELETE',
     };
-    
+
 
     var p1 = new Promise(function (resolve, reject) {
         var newReq = http.request(options, (res) => {
@@ -491,7 +532,7 @@ campanhaOptController.deleteDonation = function (req, res) {
             res.setEncoding('utf-8');
 
             res.on('data', (d) => {
-                campanha += d;
+                campanha= d;
                 resolve();
             });
         });
@@ -504,7 +545,16 @@ campanhaOptController.deleteDonation = function (req, res) {
     })
 
     p1.then(function () {
-        res.redirect("/admin/getCampanhas");
+        console.log(JSON.parse(campanha));
+        campanha=JSON.parse(campanha);
+        if (campanha.nModified==0) {
+            req.flash('error_msg', 'Ocorreu um erro');
+            res.redirect("/admin");
+
+        } else {
+            req.flash('success_msg', 'Apagado com sucesso');
+            res.redirect("/admin/getCampanhas");
+        }
     });
 
 };
