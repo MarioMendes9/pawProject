@@ -16,33 +16,39 @@
       <h1 class="font-weight-bold">Users List</h1><br>
       <% include ../messages %>
       <% if(users.length>0) { %>
-      <table class="table table-striped table-bordered table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Username</th>
-            <th scope="col">IBAN</th>
-            <th scope="col">Endereço</th>
-            <th scope="col">Nome Completo</th>
-            <th scope="col">NIF</th>
-            <th scope="col">Tipo</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Username</th>
+              <th scope="col">IBAN</th>
+              <th scope="col">Endereço</th>
+              <th scope="col">Nome Completo</th>
+              <th scope="col">NIF</th>
+              <th scope="col">Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <% for(var i=0; i<users.length;i++) { %>
-          <tr>
-            <th scope="row"><%= i + 1%></th>
-            <td><a href="/admin/showInfo/<%= users[i]._id%>" class="nameList"><%= users[i].username%></a></td>
-            <td><%= users[i].IBAN%></td>
-            <td><%= users[i].localizacao%></td>
-            <td><%= users[i].nomeCompleto%></td>
-            <td><%= users[i].NIF%></td>
-            <td><%= users[i].tipoU%></td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
+            <% for(var i=0; i<users.length;i++) { %>
+            <tr>
+              <th scope="row"><%= i + 1%></th>
+              <td><a href="/admin/showInfo/<%= users[i]._id%>" class="nameList"><%= users[i].username%></a></td>
+              <td><%= users[i].IBAN%></td>
+              <% if(users[i].localizacao != null) {%>
+              <td><%= users[i].localizacao%></td>
+              <% } else { %>
+              <td>Dados Inexistente</td>
+              <% } %>
+              <td><%= users[i].nomeCompleto%></td>
+              <td><%= users[i].NIF%></td>
+              <td><%= users[i].tipoU%></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
       <% } else { %>
       <div>No users found.</div>
       <% } %>
