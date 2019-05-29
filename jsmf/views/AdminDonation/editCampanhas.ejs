@@ -15,62 +15,63 @@
             <h1 class="font-weight-bold">Edit Campanhas</h1>
 
             <form action="/admin/editCamp/<%= campanha._id %>" method="POST" enctype="multipart/form-data">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-dark">
+                        <tbody>
+                            <tr>
+                                <td>Estado</td>
+                                <td>
+                                    <select name="estado" id="exampleFormControlSelect1">
+                                        <% if(campanha.estado == true){ %>
+                                        <option value="true">Ativo</option>
+                                        <option value="false">Nao Ativo</option>
+                                        <% } else {%>
+                                        <option value="false">Nao Ativo</option>
+                                        <option value="true">Ativo</option>
+                                        <% } %>
+                                </td>
+                                <!-- Sei la -->
 
-                <table class="table table-striped table-bordered table-dark">
-                    <tbody>
-                        <tr>
-                            <td>Estado</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><input type="text" name="description" value="<%= campanha.description %>" /></td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>Target Value</td>
+                                <td><input type="number" name="targetValue" value="<%= campanha.targetValue %>" /></td>
+                            </tr>
+                            <td>logoName</td>
+
                             <td>
-                                <select name="estado" id="exampleFormControlSelect1">
-                                    <% if(campanha.estado == true){ %>
-                                    <option value="true">Ativo</option>
-                                    <option value="false">Nao Ativo</option>
-                                    <% } else {%>
-                                    <option value="false">Nao Ativo</option>
-                                    <option value="true">Ativo</option>
-                                    <% } %>
+                                <input type="hidden" name="oldLog" value="<%= campanha.logoName %>">
+                                <input type="file" id="file" name="logo" accept="image/*">
                             </td>
-                            <!-- Sei la -->
+                            </tr>
+                            <tr>
+                                <td>IBAN</td>
+                                <td><input type="text" name="IBAN" value="<%= campanha.IBAN %>" /></td>
 
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td><input type="text" name="description" value="<%= campanha.description %>" /></td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td>Target Value</td>
-                            <td><input type="number" name="targetValue" value="<%= campanha.targetValue %>" /></td>
-                        </tr>
-                        <td>logoName</td>
+                            </tr>
+                            <tr>
+                                <td>Responsaveis</td>
+                                <td>
+                                    <table class="table table-striped table-bordered table-dark">
 
-                        <td>
-                            <input type="hidden" name="oldLog" value="<%= campanha.logoName %>">
-                            <input type="file" id="file" name="logo" accept="image/*">
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>IBAN</td>
-                            <td><input type="text" name="IBAN" value="<%= campanha.IBAN %>" /></td>
+                                        <% for(var i =0; i < campanha.responsaveis.length; i++) { %>
+                                        <tr>
+                                            <td><input type="text" name="responsaveis"
+                                                    value="<%= campanha.responsaveis[i] %>" /></td>
+                                        </tr>
+                                        <% } %>
 
-                        </tr>
-                        <tr>
-                            <td>Responsaveis</td>
-                            <td>
-                                <table class="table table-striped table-bordered table-dark">
-
-                                    <% for(var i =0; i < campanha.responsaveis.length; i++) { %>
-                                    <tr>
-                                        <td><input type="text" name="responsaveis"
-                                                value="<%= campanha.responsaveis[i] %>" /></td>
-                                    </tr>
-                                    <% } %>
-
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>

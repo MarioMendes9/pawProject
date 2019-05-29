@@ -6,11 +6,11 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/WalpaperPageStyle.css' />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-    crossorigin=""></script>
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
     <title>Campanhas List</title>
 </head>
 
@@ -20,44 +20,46 @@
             <h1 class="font-weight-bold">Campanha List</h1><br>
             <% include ../messages %>
             <% if(campanhas.length>0) { %>
-            <table class="table table-striped table-bordered table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">estado</th>
-                        <th scope="col">description</th>
-                        <th scope="col">targetValue</th>
-                        <th scope="col">IBAN</th>
-                        <th scope="col">Total Donations</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">estado</th>
+                            <th scope="col">description</th>
+                            <th scope="col">targetValue</th>
+                            <th scope="col">IBAN</th>
+                            <th scope="col">Total Donations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <% for(var i=0; i<campanhas.length;i++) { %>
-                    <tr>
-                        <th scope="row"><%= i + 1%></th>
-                        <td><%= campanhas[i].estado%></a></td>
-                        <td><%= campanhas[i].description%></td>
-                        <td><%= campanhas[i].targetValue%></td>
-                        <td><%= campanhas[i].IBAN%></td>
+                        <% for(var i=0; i<campanhas.length;i++) { %>
+                        <tr>
+                            <th scope="row"><%= i + 1%></th>
+                            <td><%= campanhas[i].estado%></a></td>
+                            <td><%= campanhas[i].description%></td>
+                            <td><%= campanhas[i].targetValue%></td>
+                            <td><%= campanhas[i].IBAN%></td>
 
 
-                        <% if( campanhas[i].donations != null) { %>
-                        <% var totalDonation=0 %>
-                        <% for(var j = 0;j<campanhas[i].donations.length;j++){ %>
+                            <% if( campanhas[i].donations != null) { %>
+                            <% var totalDonation=0 %>
+                            <% for(var j = 0;j<campanhas[i].donations.length;j++){ %>
 
-                        <% if(campanhas[i].donations[j].estado == true) {%>
-                        <% totalDonation += campanhas[i].donations[j].montante %>
+                            <% if(campanhas[i].donations[j].estado == true) {%>
+                            <% totalDonation += campanhas[i].donations[j].montante %>
+                            <% } %>
+
+                            <% } %>
+                            <% } %>
+                            <td><%= totalDonation%></td>
+                            <td><a href="/admin/InfoCamp/<%= campanhas[i]._id%>">Show Detaisl</a></td>
+                        </tr>
                         <% } %>
-
-                        <% } %>
-                        <% } %>
-                        <td><%= totalDonation%></td>
-                        <td><a href="/admin/InfoCamp/<%= campanhas[i]._id%>">Show Detaisl</a></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <% } else { %>
             <div>No campanhas found.</div>
             <% } %>
@@ -66,22 +68,22 @@
             <div id="mapid">
                 <input type="text" id="locc" style="display:none"><%= loca %></p>
             </div>
-        
-        
+
+
             <script>
                 var mymap = L.map('mapid').setView([0, 0], 0);
-        
+
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                     maxZoom: 18,
                     id: 'mapbox.streets',
                     accessToken: 'pk.eyJ1IjoiODE3MDU3MyIsImEiOiJjanRvenltbmgzMDg2M3lycnJpZWJxdWxsIn0.jHpMyICW167U4l6tGPQyZQ'
                 }).addTo(mymap);
-        
-        
-        
+
+
+
                 mymap.setView([41.378138799999995, -8.0683536], 7);
-        
+
                 if ("<%= loca.length>0 %>") {
                     "<% for (var loca of loca) { %>"
                     var lat = "<%= loca.lat %>";
