@@ -47,18 +47,20 @@ a {
   text-decoration: none;
 }
 
-#logo {
+/* #logo {
   width: 400px;
   height: 200px;
   float: left;
   margin: 5px;
+  border: 1px solid black;
 }
+ */
 
+/* 
 #desc {
   margin-left: 420px;
 }
-
-
+ */
 
 .justify-content-md-center {
   padding: 5%;
@@ -90,4 +92,13 @@ img.startPage {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+
+@media (max-width: 480px) {
+  img {
+    width: 250px;
+    height: 125px;
+    float: left;
+    margin: 5px;
+  }
 }

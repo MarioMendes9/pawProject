@@ -81,27 +81,30 @@
         <form action="/admin/CampDonate" method="POST">
             <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="username" value="<%= user.username %>">
-                    <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
-                    <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
-                    <div id="desc">
-                        </br>
-                        </br>
-                        <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
-                            </br>
-                            <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
-                            <strong>Valor ja engariado: </strong><%= totalDonation %></br>
-                            <strong>IBAN da campanha: </strong><%= campanha[i].IBAN %></br>
-                        </p>
+                    <div class="row">
 
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <div class="col-8">
+                            <img id="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                        </div>
+                        <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
+
+                        <div class="col-4">
+                            <p class="card-text"> <strong>Descrição: </strong><%= campanha[i].description %>
+                                </br>
+                                <strong>Valor objetivo: </strong><%= campanha[i].targetValue %></br>
+                                <strong>Valor ja engariado: </strong><%= totalDonation %></br>
+                                <strong>IBAN da campanha: </strong><%= campanha[i].IBAN %></br>
+                            </p>
+                            <p></p>
+                        </div>
                     </div>
-
-                    <div class="col-end">
-
-                        <input type="number" class="form-control" name="montante" id="montante"
-                            placeholder="Montante que deseja doar">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="number" class="form-control" name="montante" id="montante"
+                                placeholder="Montante que deseja doar">
+                        </div>
                     </div>
-
                     <div class="col-12">
                         <br>
                         <button type="submit" class="btn btn-primary">Doar</button>
