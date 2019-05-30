@@ -37,8 +37,6 @@ userController.sendHome = function (req, res, next) {
             res.setEncoding('utf-8');
             res.on('data', function (d) {
                 campanhas += d;
-                console.log("campanhas");
-                console.log(campanhas);
                 resolve();
 
             });
@@ -59,9 +57,9 @@ userController.sendHome = function (req, res, next) {
 
 
 userController.register = function (req, res) {
-    var user = new User(req.body);
     req.body.username = req.body.username.toLowerCase();
-    console.log(req.body);
+    var user = new User(req.body);
+    
 
 
     let errors = [];

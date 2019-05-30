@@ -4,13 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-
 const flash = require('connect-flash');
-
 const uuid = require('uuid/v4');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
+const paypal = require('paypal-rest-sdk');
+
 var app = express();
 require('./config/config')(passport);
 var swaggerUi = require('swagger-ui-express');
@@ -24,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/User', { useNewUrlParser: true })
   .then(() => console.log('connection succesful'))
   .catch((err) => console.error(err));
 
+  
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/user');
 
@@ -66,6 +67,8 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   next();
 });
+
+
 
 
 app.use('/api-docs-Camp', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

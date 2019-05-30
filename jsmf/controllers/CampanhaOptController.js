@@ -5,6 +5,13 @@ var fs = require('fs');
 var multiparty = require('multiparty');
 var campanhaOptController = {};
 var User = require("../models/User");
+var paypal = require('paypal-rest-sdk');
+
+paypal.configure({
+    mode: 'sandbox', // Sandbox or live
+    client_id: 'Aeb-2J__sCU-tFm7Of4iOksS6nPFEMktZBcuOR0_-yOgxoCt4zRcyaUU1444hXiDY-FmK-51evl7fgIY',
+    client_secret: 'EI5zyBlDNkS5d9c35REI15uBowRo8_mevJ0hxtZwX6eJzmJd0wWwIsSsH8_-IYiXvV4ta_ywyOt7Qz1g'
+});
 
 campanhaOptController.manage = function (req, res) {
     res.render("../views/AdminDonation/manageCamp");
@@ -131,8 +138,7 @@ campanhaOptController.delete = function (req, res) {
     })
 
     p1.then(function () {
-        console.log("delete");
-        console.log(campanha);
+
         if (campanha.deletedCount != 0) {
             req.flash('success_msg', 'Campanha apagada com sucesso');
             res.redirect("/admin");
@@ -209,7 +215,7 @@ campanhaOptController.create = function (req, res) {
             });
 
             newReq.on('error', (error) => {
-                console.log("aqui");
+
                 req.flash('error_msg', 'Ocorreu um erro');
                 res.redirect("/admins");
             });
@@ -265,7 +271,7 @@ campanhaOptController.addDonation = function (req, res) {
 
             res.on('data', (d) => {
                 campanha = d;
-                console.log(campanha == 'null');
+
                 if (campanha == 'null') {
                     reject();
                 } else {
@@ -532,7 +538,7 @@ campanhaOptController.deleteDonation = function (req, res) {
             res.setEncoding('utf-8');
 
             res.on('data', (d) => {
-                campanha= d;
+                campanha = d;
                 resolve();
             });
         });
@@ -545,9 +551,9 @@ campanhaOptController.deleteDonation = function (req, res) {
     })
 
     p1.then(function () {
-        console.log(JSON.parse(campanha));
-        campanha=JSON.parse(campanha);
-        if (campanha.nModified==0) {
+
+        campanha = JSON.parse(campanha);
+        if (campanha.nModified == 0) {
             req.flash('error_msg', 'Ocorreu um erro');
             res.redirect("/admin");
 
@@ -593,4 +599,146 @@ campanhaOptController.donationsToAprove = function (req, res) {
 
 };
 
+
+
+campanhaOptController.donatePaypal = function (req, res) {
+
+    var tempDonation = {
+        donation: {
+            user: req.body.username,
+            montante: req.body.montante
+        },
+        id: req.body.idCampanha
+    }
+
+    // create payment obje
+    var payReq = JSON.stringify({
+        intent: 'sale',
+        payer: {
+            payment_method: 'paypal'
+        },
+        redirect_urls: {
+            return_url: 'http://localhost:3000/admin/success',
+            cancel_url: 'http://localhost:3000/admin/cancel'
+        },
+        transactions: [{
+            amount: {
+                total: req.body.montante,
+                currency: 'EUR'
+            },
+            "item_list": {
+                "items": [{
+                    "name": "Doaçao",
+                    "sku": "Doaçao",
+                    "price": req.body.montante,
+                    "currency": "EUR",
+                    "quantity": 1
+                }]
+            },
+
+            description: 'Obrigado pela sua doaçao.'
+        }]
+    });
+
+    paypal.payment.create(payReq, function (error, payment) {
+        var links = {};
+
+        if (error) {
+            console.error(JSON.stringify(error));
+        } else {
+            // Capture HATEOAS links
+            payment.links.forEach(function (linkObj) {
+                links[linkObj.rel] = {
+                    href: linkObj.href,
+                    method: linkObj.method
+                };
+            })
+
+            // If the redirect URL is present, redirect the customer to that URL
+            if (links.hasOwnProperty('approval_url')) {
+
+                var campanha;
+                var pro = new Promise(function (resolve, reject) {
+
+
+                    var tempDonation = {
+                        donation: {
+                            estado:true,
+                            user: req.body.username,
+                            montante: req.body.montante
+                        },
+                        id: req.body.idCampanha
+                    }
+
+                    var details = JSON.stringify(tempDonation);
+                    var options = {
+                        hostname: 'localhost',
+                        port: 8080,
+                        path: '/api/v1/addDonation',
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Content-Length': details.length
+                        }
+                    };
+
+
+                    var newReq = http.request(options, (res) => {
+                        console.log(`statusCode:${res.statusCode}`);
+                        res.setEncoding('utf-8');
+
+                        res.on('data', (d) => {
+                            campanha = d;
+
+                            if (campanha == 'null') {
+                                reject();
+                            } else {
+                                resolve();
+                            }
+
+
+                        });
+                    });
+
+                    newReq.on('error', (error) => {
+                        reject();
+                    });
+                    newReq.write(details);
+                    newReq.end();
+
+                });
+
+                pro.then(function () {
+                    res.redirect(links['approval_url'].href);
+                }, function () {
+                    req.flash('error_msg', 'Pedimos desculpa mas ocorreu um erro, tente mais tarde!');
+                    res.redirect("/home");
+                });
+
+                
+            } else {
+                console.error('no redirect URI present');
+            }
+        }
+    });
+}
+
+campanhaOptController.addDonatePaypal = function (req, res) {
+    var paymentId = req.query.paymentId;
+    var payerId = { payer_id: req.query.PayerID };
+
+    paypal.payment.execute(paymentId, payerId, function (error, payment) {
+        if (error) {
+            console.error(JSON.stringify(error));
+        } else {
+            if (payment.state == 'approved') {
+                req.flash('success_msg', 'Obrigado pela donation!');
+                res.redirect("/home");
+            } else {
+                req.flash('error_msg', 'Pedimos desculpa mas ocorreu um erro, tente mais tarde!');
+                res.redirect("/home");
+            }
+        }
+    });
+};
 module.exports = campanhaOptController;

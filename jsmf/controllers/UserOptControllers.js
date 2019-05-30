@@ -54,14 +54,14 @@ userOptController.edit = function (req, res) {
         if (err) {
 
             req.flash('error_msg', 'Ocorreu um erro');
-            res.redirect("/admin/listUsers");
+            res.redirect("/home");
         }
         if (user == null) {
             req.flash('error_msg', 'Ocorreu um erro');
-            res.redirect("/admin/listUsers");
+            res.redirect("/home");
         } else {
             req.flash('success_msg', 'Utilizador editado com sucesso');
-            res.redirect("/admin/listUsers");
+            res.redirect("/home");
         }
 
 
