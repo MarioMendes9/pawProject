@@ -76,4 +76,13 @@ router.post('/editCamp/:id', adminAuthenticated, campOptions.editCamp);
  */
 router.get('/confirmDonationsCamp', adminAuthenticated, campOptions.donationsToAprove);
 
+router.post('/paypalDonate',campOptions.donatePaypal);
+
+router.get('/success',campOptions.addDonatePaypal);
+
+router.post('/cancel',function(req,res){
+    req.flash('error_msg', 'Doaçao cancelada');
+    res.redirect("/home");
+});
+
 module.exports = router;

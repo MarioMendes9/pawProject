@@ -78,7 +78,7 @@
 
         <% } %>
 
-        <form action="/admin/CampDonate" method="POST">
+        <form method="POST">
             <div class="card">
                 <div class="card-body">
                     <input type="hidden" name="username" value="<%= user.username %>">
@@ -103,7 +103,9 @@
 
                     <div class="col-12">
                         <br>
-                        <button type="submit" class="btn btn-primary">Doar</button>
+                        
+                        <button type="submit" class="btn btn-primary" formaction="/admin/CampDonate">Doar</button>
+                        <button type="submit" id="paypalButton" class="btn btn-primary" formaction="/admin/paypalDonate">Doar pelo paypal</button>
                     </div>
                     <br>
                 </div>
@@ -128,6 +130,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 
 </body>
 
