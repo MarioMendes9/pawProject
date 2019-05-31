@@ -37,8 +37,8 @@
                                         href="/admin/showByUsername/<%= campanha.donations[i].user%>"><%= campanha.donations[i].user%></a>
                                 </td>
 
-                                <td><input type="number" name="montante"
-                                        value="<%= campanha.donations[i].montante %>" />
+                                <td><input type="number" name="montante" value="<%= campanha.donations[i].montante %>"
+                                        min="1" />
                                 </td>
                                 <td>
                                     <select name="estado" id="estado">

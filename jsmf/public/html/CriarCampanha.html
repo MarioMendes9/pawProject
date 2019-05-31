@@ -23,18 +23,21 @@
                 <textarea name="description" class="form-control" placeholder="Pequena descricao" required></textarea>
                 </br>
                 <label for="targetValue">Value a atingir :</label>
-                <input type="number" class="form-control" name="targetValue" id="targetValue" placeholder="Insira aqui o valor objetivo" required>
+                <input type="number" class="form-control" name="targetValue" id="targetValue"
+                    placeholder="Insira aqui o valor objetivo" min="1" required>
                 </br>
                 <label for="logo">Logo :</label></br>
                 <input type="file" name="logo" accept="image/*" required>
                 </br></br>
                 <label for="IBAN">IBAN :</label>
-                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="Insira o IBAN da Campanha" required>
+                <input type="text" class="form-control" name="IBAN" id="iban" placeholder="Insira o IBAN da Campanha"
+                    required>
                 </br>
                 <label for="fieldList">Responsaveis :</label>
                 <div id="fieldList">
 
-                    <input type='text' name='responsaveis[]' class='form-control' placeholder='Nome do responsavel' required/>
+                    <input type='text' name='responsaveis[]' class='form-control' placeholder='Nome do responsavel'
+                        required />
                     </br>
                 </div>
                 <button id="addMore">Adicionar mais responsaveis</button>

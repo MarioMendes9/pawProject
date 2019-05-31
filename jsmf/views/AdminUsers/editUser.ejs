@@ -18,16 +18,19 @@
                         <tbody>
                             <tr>
                                 <td>Username</td>
-                                <td><input type="text" name="username" value="<%= user.username %>" /></td>
+                                <td><input type="text" name="username" value="<%= user.username %>"
+                                        pattern="[A-Za-z]{1,15}" required /></td>
                             </tr>
                             <tr>
                                 <td>Password</td>
-                                <td><input type="text" name="password" value="<%= user.password %>" /></td>
+                                <td><input type="text" name="password" value="<%= user.password %>" pattern=".{6,}"
+                                        required />
+                                </td>
                             </tr>
                             <tr>
                             <tr>
                                 <td>IBAN</td>
-                                <td><input type="text" name="IBAN" value="<%= user.IBAN %>" /></td>
+                                <td><input type="text" name="IBAN" value="<%= user.IBAN %>" required /></td>
                             </tr>
                             <td>Localizaçao</td>
                             <td>
@@ -43,11 +46,14 @@
                                 </tr>
                                 <tr>
                                     <td>Nome completo</td>
-                                    <td><input type="text" name="nomeCompleto" value="<%= user.nomeCompleto %>" /></td>
+                                    <td><input type="text" name="nomeCompleto" value="<%= user.nomeCompleto %>"
+                                            pattern="[A-Za-z\s]{1,30}" required /></td>
                                 </tr>
                                 <tr>
                                     <td>NIF</td>
-                                    <td><input type="number" name="NIF" value="<%= user.NIF %>" /></td>
+                                    <td><input type="number" name="NIF" value="<%= user.NIF %>" min="100000000"
+                                            max="999999999" required />
+                                    </td>
                                 </tr>
                                 <% if(isAdmin == true){ %>
                                 <tr>
