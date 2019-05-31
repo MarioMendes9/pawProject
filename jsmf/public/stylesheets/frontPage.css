@@ -47,19 +47,17 @@ a {
   text-decoration: none;
 }
 
+.logoPrincipal {
+  width: 400px;
+  height: 200px;
+}
+
 .logo {
   width: 700px;
   height: 350px;
   float: left;
   margin: 5px;
-  border: 1px solid black;
 }
-
-/* 
-#desc {
-  margin-left: 420px;
-}
- */
 
 .justify-content-md-center {
   padding: 5%;
@@ -112,5 +110,14 @@ img.startPage {
     height: 212.5px;
     float: left;
     margin: 5px;
+  }
+}
+
+/*Formato telemovel Samsung S9 para o logoTipo da pagina*/
+
+@media (max-width: 360px) {
+  .logoPrincipal {
+    width: 305px;
+    height: 150px;
   }
 }

@@ -99,10 +99,6 @@
                                                 <button type="submit" class="btn btn-primary">EDIT
                                                     Donations</button>
                                             </form><br>
-                                            <!-- <form action="DEFENIR" method="POST">
-                                        <button type="submit" class="btn btn-danger">REMOVE
-                                            Donation</button>
-                                    </form> -->
 
                                         </td>
                                         <% } else { %>
@@ -117,7 +113,7 @@
             </div>
             <br>
             <h3><a href="/admin/editCamp/<%= campanha._id%>">EDIT Campanha</a></h3>
-            <% if (totalDonation == 0) {%>
+            <% if (campanha.donations.length == 0) {%>
             <form action="/admin/deleteCamp/<%= campanha._id%>" method="POST">
                 <input type="hidden" name="logoName" value="<%= campanha.logoName %>">
                 <button type="submit" class="btn btn-danger">DELETE</button>
