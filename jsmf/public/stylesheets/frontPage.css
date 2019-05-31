@@ -47,14 +47,13 @@ a {
   text-decoration: none;
 }
 
-/* #logo {
-  width: 400px;
-  height: 200px;
+.logo {
+  width: 700px;
+  height: 350px;
   float: left;
   margin: 5px;
   border: 1px solid black;
 }
- */
 
 /* 
 #desc {
@@ -94,10 +93,23 @@ img.startPage {
   width: 50%;
 }
 
+/*Formato Telemovel */
+
 @media (max-width: 480px) {
-  img {
+  img.logo {
     width: 250px;
     height: 125px;
+    float: left;
+    margin: 5px;
+  }
+}
+
+/*Formato Tablet */
+
+@media (max-width: 768px) {
+  img.logo {
+    width: 425px;
+    height: 212.5px;
     float: left;
     margin: 5px;
   }
