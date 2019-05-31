@@ -30,18 +30,18 @@
                                         <option value="true">Ativo</option>
                                         <% } %>
                                 </td>
-                                <!-- Sei la -->
 
                             </tr>
                             <tr>
                                 <td>Description</td>
-                                <td><input type="text" name="description" value="<%= campanha.description %>" /></td>
+                                <td><input type="text" name="description" value="<%= campanha.description %>"
+                                        required /></td>
                             </tr>
                             <tr>
                             <tr>
                                 <td>Target Value</td>
-                                <td><input type="number" name="targetValue" value="<%= campanha.targetValue %>"
-                                        min="1" /></td>
+                                <td><input type="number" name="targetValue" value="<%= campanha.targetValue %>" min="1"
+                                        required /></td>
                             </tr>
                             <td>logoName</td>
 
@@ -52,7 +52,7 @@
                             </tr>
                             <tr>
                                 <td>IBAN</td>
-                                <td><input type="text" name="IBAN" value="<%= campanha.IBAN %>" /></td>
+                                <td><input type="text" name="IBAN" value="<%= campanha.IBAN %>" required /></td>
 
                             </tr>
                             <tr>
@@ -63,7 +63,7 @@
                                         <% for(var i =0; i < campanha.responsaveis.length; i++) { %>
                                         <tr>
                                             <td><input type="text" name="responsaveis"
-                                                    value="<%= campanha.responsaveis[i] %>" /></td>
+                                                    value="<%= campanha.responsaveis[i] %>" required /></td>
                                         </tr>
                                         <% } %>
 
