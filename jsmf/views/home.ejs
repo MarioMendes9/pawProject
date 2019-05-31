@@ -85,7 +85,9 @@
 
                         <input type="hidden" name="username" value="<%= user.username %>">
                         <div class="col-8">
-                            <img class="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' />
+                            <!-- <img class="logo" src='../images/logoCamp/<%= campanha[i].logoName %>' /> -->
+                            <img src='../images/logoCamp/<%= campanha[i].logoName %>'
+                                class="rounded float-left startPage">
                             <p></p>
                         </div>
                         <input type="hidden" name="idCampanha" value="<%=campanha[i]._id %>">
